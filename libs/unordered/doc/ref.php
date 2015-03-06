@@ -67,14 +67,20 @@ EOL;
 <?php if ($map): ?>
                     <row>
                       <entry><emphasis>Key</emphasis></entry>
-                      <entry>Key must be Assignable and CopyConstructible.</entry></row>
+                      <entry><code>Key</code> must be <code>Erasable</code> from the container
+                        (i.e. <code>allocator_traits</code> can <code>destroy</code> it).
+                      </entry></row>
                     <row>
                       <entry><emphasis>Mapped</emphasis></entry>
-                      <entry>Mapped must be CopyConstructible</entry></row>
+                      <entry><code>Mapped</code> must be <code>Erasable</code> from the container
+                        (i.e. <code>allocator_traits</code> can <code>destroy</code> it).
+                      </entry></row>
 <?php else: ?>
                     <row>
                       <entry><emphasis>Value</emphasis></entry>
-                      <entry>Value must be Assignable and CopyConstructible</entry></row>
+                      <entry><code>Value</code> must be <code>Erasable</code> from the container
+                        (i.e. <code>allocator_traits</code> can <code>destroy</code> it).
+                      </entry></row>
 <?php endif ?>
                     <row>
                       <entry><emphasis>Hash</emphasis></entry>
@@ -206,6 +212,11 @@ EOL;
             <description>
               <para>Constructs an empty container with at least n buckets, using hf as the hash function, eq as the key equality predicate, a as the allocator and a maximum load factor of 1.0.</para>
             </description>
+            <requires>
+              <para>If the defaults are used, <code>hasher</code>, <code>key_equal</code> and
+                <code>allocator_type</code> need to be <code>DefaultConstructible</code>.
+              </para>
+            </requires>
           </constructor>
           <constructor>
             <template>
@@ -237,6 +248,11 @@ EOL;
             <description>
               <para>Constructs an empty container with at least n buckets, using hf as the hash function, eq as the key equality predicate, a as the allocator and a maximum load factor of 1.0 and inserts the elements from [f, l) into it.</para>
             </description>
+            <requires>
+              <para>If the defaults are used, <code>hasher</code>, <code>key_equal</code> and
+                <code>allocator_type</code> need to be <code>DefaultConstructible</code>.
+              </para>
+            </requires>
           </constructor>
           <constructor>
             <parameter>
@@ -408,6 +424,11 @@ EOL;
                     ' if and only if there is no element in the container with an equivalent '.$key_name. '.';
                 ?></para>
               </description>
+              <requires>
+                <para><code>value_type</code> is <code>EmplaceConstructible</code> into
+                  <code>X</code> from <code>args</code>.
+                </para>
+              </requires>
               <returns>
 <?php if ($equivalent_keys): ?>
                 <para>An iterator pointing to the inserted element.</para>
@@ -428,10 +449,6 @@ EOL;
                 <para>Since existing <code>std::pair</code> implementations don't support
                       <code>std::piecewise_construct</code> this emulates it,
                       but using <code>boost::unordered::piecewise_construct</code>.</para>
-                <para>In version of Boost before 1.48 this emulated the variadic pair
-                      constructor from older C++0x drafts. For backwards compatability
-                      this can be enabled by defining the macro
-                      <code>BOOST_UNORDERED_DEPRECATED_PAIR_CONSTRUCT</code>.</para>
               </notes>
             </method>
             <method name="emplace_hint">
@@ -453,6 +470,11 @@ EOL;
                 ?></para>
                 <para><code>hint</code> is a suggestion to where the element should be inserted.</para>
               </description>
+              <requires>
+                <para><code>value_type</code> is <code>EmplaceConstructible</code> into
+                  <code>X</code> from <code>args</code>.
+                </para>
+              </requires>
               <returns>
 <?php if ($equivalent_keys): ?>
                 <para>An iterator pointing to the inserted element.</para>
@@ -473,10 +495,6 @@ EOL;
                 <para>Since existing <code>std::pair</code> implementations don't support
                       <code>std::piecewise_construct</code> this emulates it,
                       but using <code>boost::unordered::piecewise_construct</code>.</para>
-                <para>In version of Boost before 1.48 this emulated the variadic pair
-                      constructor from older C++0x drafts. For backwards compatability
-                      this can be enabled by defining the macro
-                      <code>BOOST_UNORDERED_DEPRECATED_PAIR_CONSTRUCT</code>.</para>
               </notes>
             </method>
             <method name="insert">
@@ -490,6 +508,39 @@ EOL;
                     ' if and only if there is no element in the container with an equivalent '.$key_name. '.';
                 ?></para>
               </description>
+              <requires>
+                <para><code>value_type</code> is <code>CopyInsertable</code>.</para>
+              </requires>
+              <returns>
+<?php if ($equivalent_keys): ?>
+                <para>An iterator pointing to the inserted element.</para>
+<?php else: ?>
+                <para>The bool component of the return type is true if an insert took place.</para>
+                <para>If an insert took place, then the iterator points to the newly inserted element. Otherwise, it points to the element with equivalent <?php echo $key_name; ?>.</para>
+<?php endif; ?>
+              </returns>
+              <throws>
+                <para>If an exception is thrown by an operation other than a call to <code>hasher</code> the function has no effect.</para>
+              </throws>
+              <notes>
+                <para>Can invalidate iterators, but only if the insert causes the load factor to be greater to or equal to the maximum load factor.</para>
+                <para>Pointers and references to elements are never invalidated.</para>
+              </notes>
+            </method>
+            <method name="insert">
+              <parameter name="obj">
+                <paramtype>value_type&amp;&amp;</paramtype>
+              </parameter>
+              <type><?php echo $equivalent_keys ? 'iterator' : 'std::pair&lt;iterator, bool&gt;' ?></type>
+              <description>
+                <para>Inserts <code>obj</code> in the container<?php
+                echo $equivalent_keys ? '.' :
+                    ' if and only if there is no element in the container with an equivalent '.$key_name. '.';
+                ?></para>
+              </description>
+              <requires>
+                <para><code>value_type</code> is <code>MoveInsertable</code>.</para>
+              </requires>
               <returns>
 <?php if ($equivalent_keys): ?>
                 <para>An iterator pointing to the inserted element.</para>
@@ -522,6 +573,44 @@ EOL;
 <?php endif; ?>
                 <para>hint is a suggestion to where the element should be inserted.</para>
               </description>
+              <requires>
+                <para><code>value_type</code> is <code>CopyInsertable</code>.</para>
+              </requires>
+              <returns>
+<?php if ($equivalent_keys): ?>
+                <para>An iterator pointing to the inserted element.</para>
+<?php else: ?>
+                <para>If an insert took place, then the iterator points to the newly inserted element. Otherwise, it points to the element with equivalent <?php echo $key_name; ?>.</para>
+<?php endif; ?>
+              </returns>
+              <throws>
+                <para>If an exception is thrown by an operation other than a call to <code>hasher</code> the function has no effect.</para>
+              </throws>
+              <notes>
+                <para>The standard is fairly vague on the meaning of the hint. But the only practical way to use it, and the only way that Boost.Unordered supports is to point to an existing element with the same <?php echo $key_name; ?>. </para>
+                <para>Can invalidate iterators, but only if the insert causes the load factor to be greater to or equal to the maximum load factor.</para>
+                <para>Pointers and references to elements are never invalidated.</para>
+              </notes>
+            </method>
+            <method name="insert">
+              <parameter name="hint">
+                <paramtype>const_iterator</paramtype>
+              </parameter>
+              <parameter name="obj">
+                <paramtype>value_type&amp;&amp;</paramtype>
+              </parameter>
+              <type>iterator</type>
+              <description>
+<?php if ($equivalent_keys): ?>
+                <para>Inserts <code>obj</code> in the container.</para>
+<?php else: ?>
+                <para>Inserts <code>obj</code> in the container if and only if there is no element in the container with an equivalent <?php echo $key_name; ?>.</para>
+<?php endif; ?>
+                <para>hint is a suggestion to where the element should be inserted.</para>
+              </description>
+              <requires>
+                <para><code>value_type</code> is <code>MoveInsertable</code>.</para>
+              </requires>
               <returns>
 <?php if ($equivalent_keys): ?>
                 <para>An iterator pointing to the inserted element.</para>
@@ -553,6 +642,10 @@ EOL;
               <description>
                 <para>Inserts a range of elements into the container. Elements are inserted if and only if there is no element in the container with an equivalent <?php echo $key_name; ?>.</para>
               </description>
+              <requires>
+                <para><code>value_type</code> is <code>EmplaceConstructible</code> into
+                  <code>X</code> from <code>*first</code>.</para>
+              </requires>
               <throws>
                 <para>When inserting a single element, if an exception is thrown by an operation other than a call to <code>hasher</code> the function has no effect.</para>
               </throws>
@@ -1013,9 +1106,7 @@ EOL;
               </description>
               <notes>
                 <para>The behavior of this function was changed to match
-                  the C++11 standard in Boost 1.48. If you wish to use
-                  the old behaviour, define the macro
-                  <code>BOOST_UNORDERED_DEPRECATED_EQUALITY</code>.</para>
+                  the C++11 standard in Boost 1.48.</para>
                 <para>Behavior is undefined if the two containers don't have
                     equivalent equality predicates.</para>
               </notes>
@@ -1056,9 +1147,7 @@ EOL;
               </description>
               <notes>
                 <para>The behavior of this function was changed to match
-                  the C++11 standard in Boost 1.48. If you wish to use
-                  the old behaviour, define the macro
-                  <code>BOOST_UNORDERED_DEPRECATED_EQUALITY</code>.</para>
+                  the C++11 standard in Boost 1.48.</para>
                 <para>Behavior is undefined if the two containers don't have
                     equivalent equality predicates.</para>
               </notes>

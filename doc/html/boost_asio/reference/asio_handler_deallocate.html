@@ -27,7 +27,7 @@
 <a name="boost_asio.reference.asio_handler_deallocate"></a><a class="link" href="asio_handler_deallocate.html" title="asio_handler_deallocate">asio_handler_deallocate</a>
 </h3></div></div></div>
 <p>
-        <a class="indexterm" name="id893702"></a> 
+        <a class="indexterm" name="idp30046432"></a> 
 Default deallocation function for handlers.
       </p>
 <pre class="programlisting"><span class="keyword">void</span> <span class="identifier">asio_handler_deallocate</span><span class="special">(</span>
@@ -40,10 +40,10 @@ Default deallocation function for handlers.
         handlers to provide custom allocation for the associated temporary objects.
       </p>
 <p>
-        This default implementation is simply:
+        The default implementation of these allocation hooks uses <code class="computeroutput"><span class="keyword">operator</span>
+        <span class="keyword">new</span></code> and <code class="computeroutput"><span class="keyword">operator</span>
+        <span class="keyword">delete</span></code>.
       </p>
-<pre class="programlisting"><span class="special">::</span><span class="keyword">operator</span> <span class="keyword">delete</span><span class="special">(</span><span class="identifier">pointer</span><span class="special">);</span>
-</pre>
 <h5>
 <a name="boost_asio.reference.asio_handler_deallocate.h0"></a>
         <span><a name="boost_asio.reference.asio_handler_deallocate.requirements"></a></span><a class="link" href="asio_handler_deallocate.html#boost_asio.reference.asio_handler_deallocate.requirements">Requirements</a>

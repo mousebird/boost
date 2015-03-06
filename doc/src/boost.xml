@@ -2,7 +2,7 @@
 <!DOCTYPE boostbook PUBLIC "-//Boost//DTD BoostBook XML V1.0//EN"
   "http://www.boost.org/tools/boostbook/dtd/boostbook.dtd">
 <boostbook id="boost" xmlns:xi="http://www.w3.org/2001/XInclude"
-           last-revision="$Date: 2011-12-17 08:36:06 -0800 (Sat, 17 Dec 2011) $">
+           last-revision="$Date: 2012-12-15 10:28:27 -0800 (Sat, 15 Dec 2012) $">
   <title>The Boost C++ Libraries BoostBook Documentation Subset</title>
 
   <preface id="about">
@@ -54,6 +54,8 @@
        <librarycategory name="category:io"/>
      </libraryinfo>
    </library>
+
+   <xi:include href="atomic.xml"/>
 
    <library name="Bind" dirname="bind" html-only="1">
      <libraryinfo>
@@ -371,6 +373,8 @@
    <xi:include href="../../libs/lambda/doc/lambda.xml"/>
 
    <xi:include href="lexical_cast.xml"/>
+
+   <xi:include href="lockfree.xml"/>
 
    <library name="Math" dirname="math" html-only="1">
      <libraryinfo>

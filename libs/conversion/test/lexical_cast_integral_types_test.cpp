@@ -68,6 +68,7 @@ void test_conversion_from_to_uintmax_t();
 void test_conversion_from_to_longlong();
 void test_conversion_from_to_ulonglong();
 #endif
+void test_integral_conversions_on_min_max();
 
 
 unit_test::test_suite *init_unit_test_suite(int, char *[])
@@ -87,6 +88,7 @@ unit_test::test_suite *init_unit_test_suite(int, char *[])
     suite->add(BOOST_TEST_CASE(&test_conversion_from_to_longlong));
     suite->add(BOOST_TEST_CASE(&test_conversion_from_to_ulonglong));
 #endif
+    suite->add(BOOST_TEST_CASE(&test_integral_conversions_on_min_max));
 
     return suite;
 }
@@ -230,7 +232,7 @@ void test_conversion_from_integral_to_string(CharT)
 
         // Test values around 100, 1000, 10000, ...
         T ten_power = 100;
-        for(int e = 2; e <= limits::digits10; ++e, ten_power *= 10)
+        for(int e = 2; e < limits::digits10; ++e, ten_power *= 10)
         {
             // ten_power + 100 probably never overflows
             for(t = ten_power - 100; t != ten_power + 100; ++t)
@@ -327,7 +329,7 @@ void test_conversion_from_string_to_integral(CharT)
 
         // Test values around 100, 1000, 10000, ...
         T ten_power = 100;
-        for(int e = 2; e <= limits::digits10; ++e, ten_power *= 10)
+        for(int e = 2; e < limits::digits10; ++e, ten_power *= 10)
         {
             // ten_power + 100 probably never overflows
             for(t = ten_power - 100; t != ten_power + 100; ++t)
@@ -386,12 +388,12 @@ void test_conversion_from_to_integral()
     test_conversion_from_integral_to_char<T>(wzero);
     test_conversion_from_char_to_integral<T>(wzero);
 #endif
-#if !defined(BOOST_NO_CHAR16_T) && !defined(BOOST_NO_UNICODE_LITERALS)
+#if !defined(BOOST_NO_CXX11_CHAR16_T) && !defined(BOOST_NO_CXX11_UNICODE_LITERALS)
     char16_t const u16zero = u'0';
     test_conversion_from_integral_to_char<T>(u16zero);
     test_conversion_from_char_to_integral<T>(u16zero);
 #endif
-#if !defined(BOOST_NO_CHAR32_T) && !defined(BOOST_NO_UNICODE_LITERALS)
+#if !defined(BOOST_NO_CXX11_CHAR32_T) && !defined(BOOST_NO_CXX11_UNICODE_LITERALS)
     char32_t const u32zero = u'0';
     test_conversion_from_integral_to_char<T>(u32zero);
     test_conversion_from_char_to_integral<T>(u32zero);
@@ -534,6 +536,19 @@ void test_conversion_from_to_ulonglong()
 
 #endif
 
+void test_integral_conversions_on_min_max()
+{
+    typedef std::numeric_limits<int> int_limits;
+    typedef std::numeric_limits<unsigned int> uint_limits;
 
+    BOOST_CHECK_EQUAL(lexical_cast<unsigned int>((uint_limits::max)()), (uint_limits::max)());
+    BOOST_CHECK_EQUAL(lexical_cast<unsigned int>((uint_limits::min)()), (uint_limits::min)());
+
+    BOOST_CHECK_EQUAL(lexical_cast<int>((int_limits::max)()), (int_limits::max)());
+    BOOST_CHECK_EQUAL(lexical_cast<int>((uint_limits::min)()), static_cast<int>((uint_limits::min)()));
+
+    BOOST_CHECK_EQUAL(lexical_cast<unsigned int>((int_limits::max)()), static_cast<unsigned int>((int_limits::max)()));
+    BOOST_CHECK_EQUAL(lexical_cast<unsigned int>((int_limits::min)()), static_cast<unsigned int>((int_limits::min)()));
+}
 
 

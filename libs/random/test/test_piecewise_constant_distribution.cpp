@@ -5,7 +5,7 @@
  * accompanying file LICENSE_1_0.txt or copy at
  * http://www.boost.org/LICENSE_1_0.txt)
  *
- * $Id: test_piecewise_constant_distribution.cpp 79771 2012-07-27 18:15:55Z jewillco $
+ * $Id: test_piecewise_constant_distribution.cpp 81851 2012-12-11 14:42:26Z marshall $
  *
  */
 

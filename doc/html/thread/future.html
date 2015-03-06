@@ -5,7 +5,7 @@
 <link rel="stylesheet" href="../../../doc/src/boostbook.css" type="text/css">
 <meta name="generator" content="DocBook XSL Stylesheets V1.76.1">
 <link rel="home" href="../index.html" title="The Boost C++ Libraries BoostBook Documentation Subset">
-<link rel="up" href="../thread.html" title="Chapter&#160;28.&#160;Thread 3.0.1">
+<link rel="up" href="../thread.html" title="Chapter&#160;30.&#160;Thread 4.0.0">
 <link rel="prev" href="changes.html" title="History">
 <link rel="next" href="thread_management.html" title="Thread Management">
 </head>
@@ -29,25 +29,52 @@
 <p>
       The following features will be included in next releases.
     </p>
-<div class="orderedlist"><ol class="orderedlist" type="1"><li class="listitem">
+<div class="orderedlist"><ol class="orderedlist" type="1">
+<li class="listitem">
           Complete the C++11 missing features, in particular
           <div class="itemizedlist"><ul class="itemizedlist" type="disc">
 <li class="listitem">
-                <a href="http://svn.boost.org/trac/boost/ticket/4710" target="_top">#4710</a>
-                Missing async().
+                <a href="http://svn.boost.org/trac/boost/ticket/7285" target="_top">#7285</a>
+                C++11 compliance: Allow to pass movable arguments for call_once.
               </li>
 <li class="listitem">
                 <a href="http://svn.boost.org/trac/boost/ticket/6227" target="_top">#6227</a>
-                Use of variadic templates on Generic Locking Algorithms on compilers
-                providing them.
-              </li>
-<li class="listitem">
-                <a href="http://svn.boost.org/trac/boost/ticket/6270" target="_top">#6270</a>
-                Add thread constructor from movable callable and movable arguments
-                following C++11.
+                C++11 compliance: Use of variadic templates on Generic Locking Algorithms
+                on compilers providing them.
               </li>
 </ul></div>
-        </li></ol></div>
+        </li>
+<li class="listitem">
+          Add some of the extension proposed in <a href="http://www.open-std.org/jtc1/sc22/wg21/docs/papers/2012/n3428.pdf" target="_top">A
+          Standardized Representation of Asynchronous Operations</a>, in particular
+          <div class="itemizedlist"><ul class="itemizedlist" type="disc">
+<li class="listitem">
+                <a href="http://svn.boost.org/trac/boost/ticket/7589" target="_top">#7589</a>
+                Synchro: Add polymorphic lockables.
+              </li>
+<li class="listitem">
+                <a href="http://svn.boost.org/trac/boost/ticket/7449" target="_top">#7449</a>
+                Synchro: Add a synchronized value class.
+              </li>
+<li class="listitem">
+                <a href="http://svn.boost.org/trac/boost/ticket/7445" target="_top">#7445</a>
+                Async: Add future&lt;&gt;.then.
+              </li>
+<li class="listitem">
+                <a href="http://svn.boost.org/trac/boost/ticket/7446" target="_top">#7446</a>
+                Async: Add when_any.
+              </li>
+<li class="listitem">
+                <a href="http://svn.boost.org/trac/boost/ticket/7447" target="_top">#7447</a>
+                Async: Add when_all.
+              </li>
+<li class="listitem">
+                <a href="http://svn.boost.org/trac/boost/ticket/7448" target="_top">#7448</a>
+                Async: Add async taking a scheduler parameter.
+              </li>
+</ul></div>
+        </li>
+</ol></div>
 </div>
 <table xmlns:rev="http://www.cs.rpi.edu/~gregod/boost/tools/doc/revision" width="100%"><tr>
 <td align="left"></td>

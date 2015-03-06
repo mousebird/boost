@@ -5,7 +5,7 @@
 <link rel="stylesheet" href="../../../doc/src/boostbook.css" type="text/css">
 <meta name="generator" content="DocBook XSL Stylesheets V1.76.1">
 <link rel="home" href="../index.html" title="The Boost C++ Libraries BoostBook Documentation Subset">
-<link rel="up" href="../boost_lexical_cast.html" title="Chapter&#160;15.&#160;Boost.Lexical_Cast 1.0">
+<link rel="up" href="../boost_lexical_cast.html" title="Chapter&#160;16.&#160;Boost.Lexical_Cast 1.0">
 <link rel="prev" href="examples.html" title="Examples">
 <link rel="next" href="frequently_asked_questions.html" title="Frequently Asked Questions">
 </head>
@@ -36,8 +36,12 @@
 <pre class="programlisting"><span class="keyword">namespace</span> <span class="identifier">boost</span>
 <span class="special">{</span>
     <span class="keyword">class</span> <span class="identifier">bad_lexical_cast</span><span class="special">;</span>
+
     <span class="keyword">template</span><span class="special">&lt;</span><span class="keyword">typename</span> <span class="identifier">Target</span><span class="special">,</span> <span class="keyword">typename</span> <span class="identifier">Source</span><span class="special">&gt;</span>
       <span class="identifier">Target</span> <span class="identifier">lexical_cast</span><span class="special">(</span><span class="keyword">const</span> <span class="identifier">Source</span><span class="special">&amp;</span> <span class="identifier">arg</span><span class="special">);</span>
+
+    <span class="keyword">template</span> <span class="special">&lt;</span><span class="keyword">typename</span> <span class="identifier">Target</span><span class="special">&gt;</span>
+      <span class="identifier">Target</span> <span class="identifier">lexical_cast</span><span class="special">(</span><span class="keyword">const</span> <span class="identifier">AnyCharacterType</span><span class="special">*</span> <span class="identifier">chars</span><span class="special">,</span> <span class="identifier">std</span><span class="special">::</span><span class="identifier">size_t</span> <span class="identifier">count</span><span class="special">);</span>
 <span class="special">}</span>
 </pre>
 <p>
@@ -61,7 +65,19 @@
         exception is thrown.
       </p>
 <p>
-        The requirements on the argument and result types are:
+</p>
+<pre class="programlisting"><span class="keyword">template</span> <span class="special">&lt;</span><span class="keyword">typename</span> <span class="identifier">Target</span><span class="special">&gt;</span>
+  <span class="identifier">Target</span> <span class="identifier">lexical_cast</span><span class="special">(</span><span class="keyword">const</span> <span class="identifier">AnyCharacterType</span><span class="special">*</span> <span class="identifier">chars</span><span class="special">,</span> <span class="identifier">std</span><span class="special">::</span><span class="identifier">size_t</span> <span class="identifier">count</span><span class="special">);</span>
+</pre>
+<p>
+        Takes an array of <code class="computeroutput"><span class="identifier">count</span></code> characters
+        as input parameter and streams them out as a Target object. If the conversion
+        is unsuccessful, a <code class="computeroutput"><span class="identifier">bad_lexical_cast</span></code>
+        exception is thrown. This call may be useful for processing nonzero terminated
+        array of characters or processing just some part of character array.
+      </p>
+<p>
+        The requirements on the argument and result types for both functions are:
       </p>
 <div class="itemizedlist"><ul class="itemizedlist" type="disc">
 <li class="listitem">
@@ -85,24 +101,23 @@
 <p>
         The character type of the underlying stream is assumed to be <code class="computeroutput"><span class="keyword">char</span></code> unless either the <code class="computeroutput"><span class="identifier">Source</span></code>
         or the <code class="computeroutput"><span class="identifier">Target</span></code> requires wide-character
-        streaming, in which case the underlying stream uses <code class="computeroutput"><span class="keyword">wchar_t</span></code>,
-        <code class="computeroutput"><span class="identifier">char16_t</span></code> or <code class="computeroutput"><span class="identifier">char32_t</span></code>. Wide-character streaming is currently
-        detected for:
+        streaming, in which case the underlying stream uses <code class="computeroutput"><span class="keyword">wchar_t</span></code>.
+        Following types also can use <code class="computeroutput"><span class="identifier">char16_t</span></code>
+        or <code class="computeroutput"><span class="identifier">char32_t</span></code> for wide-character
+        streaming:
       </p>
 <div class="itemizedlist"><ul class="itemizedlist" type="disc">
 <li class="listitem">
-            Single character: <code class="computeroutput"><span class="keyword">wchar_t</span></code>,
-            <code class="computeroutput"><span class="identifier">char16_t</span></code>, <code class="computeroutput"><span class="identifier">char32_t</span></code>
+            Single character: <code class="computeroutput"><span class="identifier">char16_t</span></code>,
+            <code class="computeroutput"><span class="identifier">char32_t</span></code>
           </li>
 <li class="listitem">
-            Arrays of characters: <code class="computeroutput"><span class="keyword">wchar_t</span>
-            <span class="special">*</span></code>, <code class="computeroutput"><span class="identifier">char16_t</span>
+            Arrays of characters: <code class="computeroutput"><span class="identifier">char16_t</span>
             <span class="special">*</span></code>, <code class="computeroutput"><span class="identifier">char32_t</span>
             <span class="special">*</span></code>, <code class="computeroutput"><span class="keyword">const</span>
-            <span class="keyword">wchar_t</span> <span class="special">*</span></code>,
-            <code class="computeroutput"><span class="keyword">const</span> <span class="identifier">char16_t</span>
-            <span class="special">*</span></code>, <code class="computeroutput"><span class="keyword">const</span>
-            <span class="identifier">char32_t</span> <span class="special">*</span></code>
+            <span class="identifier">char16_t</span> <span class="special">*</span></code>,
+            <code class="computeroutput"><span class="keyword">const</span> <span class="identifier">char32_t</span>
+            <span class="special">*</span></code>
           </li>
 <li class="listitem">
             Strings: <code class="computeroutput"><span class="identifier">std</span><span class="special">::</span><span class="identifier">basic_string</span></code>, <code class="computeroutput"><span class="identifier">boost</span><span class="special">::</span><span class="identifier">containers</span><span class="special">::</span><span class="identifier">basic_string</span></code>

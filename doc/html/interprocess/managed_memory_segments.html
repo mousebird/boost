@@ -5,7 +5,7 @@
 <link rel="stylesheet" href="../../../doc/src/boostbook.css" type="text/css">
 <meta name="generator" content="DocBook XSL Stylesheets V1.76.1">
 <link rel="home" href="../index.html" title="The Boost C++ Libraries BoostBook Documentation Subset">
-<link rel="up" href="../interprocess.html" title="Chapter&#160;12.&#160;Boost.Interprocess">
+<link rel="up" href="../interprocess.html" title="Chapter&#160;13.&#160;Boost.Interprocess">
 <link rel="prev" href="synchronization_mechanisms.html" title="Synchronization mechanisms">
 <link rel="next" href="allocators_containers.html" title="Allocators, containers and memory allocation algorithms">
 </head>
@@ -379,13 +379,13 @@
 <p>
           Windows users might also want to use native windows shared memory instead
           of the portable <code class="computeroutput"><a class="link" href="../boost/interprocess/shared_memory_object.html" title="Class shared_memory_object">shared_memory_object</a></code>
-          managed memory. This is achieved through the <code class="computeroutput"><a class="link" href="../boost/interprocess/basic_managed_win_id993101.html" title="Class template basic_managed_windows_shared_memory">basic_managed_windows_shared_memory</a></code>
+          managed memory. This is achieved through the <code class="computeroutput"><a class="link" href="../boost/interprocess/basic_managed__idp56480768.html" title="Class template basic_managed_windows_shared_memory">basic_managed_windows_shared_memory</a></code>
           class. To use it just include:
         </p>
 <pre class="programlisting"><span class="preprocessor">#include</span> <span class="special">&lt;</span><span class="identifier">boost</span><span class="special">/</span><span class="identifier">interprocess</span><span class="special">/</span><span class="identifier">managed_windows_shared_memory</span><span class="special">.</span><span class="identifier">hpp</span><span class="special">&gt;</span>
 </pre>
 <p>
-          This class has the same interface as <code class="computeroutput"><a class="link" href="../boost/interprocess/basic_managed_sha_id992762.html" title="Class template basic_managed_shared_memory">basic_managed_shared_memory</a></code>
+          This class has the same interface as <code class="computeroutput"><a class="link" href="../boost/interprocess/basic_managed__idp56460464.html" title="Class template basic_managed_shared_memory">basic_managed_shared_memory</a></code>
           but uses native windows shared memory. Note that this managed class has
           the same lifetime issues as the windows shared memory: when the last process
           attached to the windows shared memory is detached from the memory (or ends/crashes)
@@ -406,18 +406,18 @@
 <p>
           Unix users might also want to use XSI (system V) instead of the portable
           <code class="computeroutput"><a class="link" href="../boost/interprocess/shared_memory_object.html" title="Class shared_memory_object">shared_memory_object</a></code>
-          managed memory. This is achieved through the <code class="computeroutput"><a class="link" href="../boost/interprocess/basic_managed_xsi_id993432.html" title="Class template basic_managed_xsi_shared_memory">basic_managed_xsi_shared_memory</a></code>
+          managed memory. This is achieved through the <code class="computeroutput"><a class="link" href="../boost/interprocess/basic_managed__idp56500656.html" title="Class template basic_managed_xsi_shared_memory">basic_managed_xsi_shared_memory</a></code>
           class. To use it just include:
         </p>
 <pre class="programlisting"><span class="preprocessor">#include</span> <span class="special">&lt;</span><span class="identifier">boost</span><span class="special">/</span><span class="identifier">interprocess</span><span class="special">/</span><span class="identifier">managed_xsi_shared_memory</span><span class="special">.</span><span class="identifier">hpp</span><span class="special">&gt;</span>
 </pre>
 <p>
-          This class has nearly the same interface as <code class="computeroutput"><a class="link" href="../boost/interprocess/basic_managed_sha_id992762.html" title="Class template basic_managed_shared_memory">basic_managed_shared_memory</a></code>
+          This class has nearly the same interface as <code class="computeroutput"><a class="link" href="../boost/interprocess/basic_managed__idp56460464.html" title="Class template basic_managed_shared_memory">basic_managed_shared_memory</a></code>
           but uses XSI shared memory as backend.
         </p>
 </div>
 <p>
-        For more information about managed XSI shared memory capabilities, see <code class="computeroutput"><a class="link" href="../boost/interprocess/basic_managed_xsi_id993432.html" title="Class template basic_managed_xsi_shared_memory">basic_managed_xsi_shared_memory</a></code>
+        For more information about managed XSI shared memory capabilities, see <code class="computeroutput"><a class="link" href="../boost/interprocess/basic_managed__idp56500656.html" title="Class template basic_managed_xsi_shared_memory">basic_managed_xsi_shared_memory</a></code>
         class reference.
       </p>
 </div>
@@ -809,7 +809,7 @@
           That is, the mutex type used to synchronize named/unique allocations is
           defined by the <code class="computeroutput"><span class="identifier">MemoryAlgorithm</span><span class="special">::</span><span class="identifier">mutex_family</span><span class="special">::</span><span class="identifier">recursive_mutex_type</span></code>
           type. For shared memory, and memory mapped file based managed segments
-          this recursive mutex is defined as <code class="computeroutput"><a class="link" href="../boost/interprocess/interprocess_rec_id1003782.html" title="Class interprocess_recursive_mutex">interprocess_recursive_mutex</a></code>.
+          this recursive mutex is defined as <code class="computeroutput"><a class="link" href="../boost/interprocess/interprocess_r_idp57141584.html" title="Class interprocess_recursive_mutex">interprocess_recursive_mutex</a></code>.
         </p>
 <p>
           If two processes can call:
@@ -1378,6 +1378,15 @@
 <a name="interprocess.managed_memory_segments.managed_memory_segment_advanced_features.managed_memory_segment_multiple_allocations"></a><a class="link" href="managed_memory_segments.html#interprocess.managed_memory_segments.managed_memory_segment_advanced_features.managed_memory_segment_multiple_allocations" title="Multiple allocation functions">Multiple
         allocation functions</a>
 </h4></div></div></div>
+<div class="caution"><table border="0" summary="Caution">
+<tr>
+<td rowspan="2" align="center" valign="top" width="25"><img alt="[Caution]" src="../../../doc/src/images/caution.png"></td>
+<th align="left">Caution</th>
+</tr>
+<tr><td align="left" valign="top"><p>
+            This feature is experimental, interface and ABI are unstable
+          </p></td></tr>
+</table></div>
 <p>
           If an application needs to allocate a lot of memory buffers but it needs
           to deallocate them independently, the application is normally forced to
@@ -1408,49 +1417,27 @@
               Allocation ot N buffers of memory, each one of different size.
             </li>
 </ul></div>
-<pre class="programlisting"><span class="comment">//!Allocates n_elements of elem_size bytes.</span>
-<span class="identifier">multiallocation_iterator</span> <span class="identifier">allocate_many</span><span class="special">(</span><span class="identifier">std</span><span class="special">::</span><span class="identifier">size_t</span> <span class="identifier">elem_size</span><span class="special">,</span> <span class="identifier">std</span><span class="special">::</span><span class="identifier">size_t</span> <span class="identifier">min_elements</span><span class="special">,</span> <span class="identifier">std</span><span class="special">::</span><span class="identifier">size_t</span> <span class="identifier">preferred_elements</span><span class="special">,</span> <span class="identifier">std</span><span class="special">::</span><span class="identifier">size_t</span> <span class="special">&amp;</span><span class="identifier">received_elements</span><span class="special">);</span>
+<pre class="programlisting"><span class="comment">//!Allocates n_elements of elem_bytes bytes. </span>
+<span class="comment">//!Throws bad_alloc on failure. chain.size() is not increased on failure.</span>
+<span class="keyword">void</span> <span class="identifier">allocate_many</span><span class="special">(</span><span class="identifier">size_type</span> <span class="identifier">elem_bytes</span><span class="special">,</span> <span class="identifier">size_type</span> <span class="identifier">n_elements</span><span class="special">,</span> <span class="identifier">multiallocation_chain</span> <span class="special">&amp;</span><span class="identifier">chain</span><span class="special">);</span>
 
-<span class="comment">//!Allocates n_elements, each one of elem_sizes[i] bytes.</span>
-<span class="identifier">multiallocation_iterator</span> <span class="identifier">allocate_many</span><span class="special">(</span><span class="keyword">const</span> <span class="identifier">std</span><span class="special">::</span><span class="identifier">size_t</span> <span class="special">*</span><span class="identifier">elem_sizes</span><span class="special">,</span> <span class="identifier">std</span><span class="special">::</span><span class="identifier">size_t</span> <span class="identifier">n_elements</span><span class="special">);</span>
+<span class="comment">//!Allocates n_elements, each one of element_lengths[i]*sizeof_element bytes.</span>
+<span class="comment">//!Throws bad_alloc on failure. chain.size() is not increased on failure.</span>
+<span class="keyword">void</span> <span class="identifier">allocate_many</span><span class="special">(</span><span class="keyword">const</span> <span class="identifier">size_type</span> <span class="special">*</span><span class="identifier">element_lengths</span><span class="special">,</span> <span class="identifier">size_type</span> <span class="identifier">n_elements</span><span class="special">,</span> <span class="identifier">size_type</span> <span class="identifier">sizeof_element</span><span class="special">,</span> <span class="identifier">multiallocation_chain</span> <span class="special">&amp;</span><span class="identifier">chain</span><span class="special">);</span>
 
-<span class="comment">//!Allocates n_elements of elem_size bytes. No throwing version.</span>
-<span class="identifier">multiallocation_iterator</span> <span class="identifier">allocate_many</span><span class="special">(</span><span class="identifier">std</span><span class="special">::</span><span class="identifier">size_t</span> <span class="identifier">elem_size</span><span class="special">,</span> <span class="identifier">std</span><span class="special">::</span><span class="identifier">size_t</span> <span class="identifier">min_elements</span><span class="special">,</span> <span class="identifier">std</span><span class="special">::</span><span class="identifier">size_t</span> <span class="identifier">preferred_elements</span><span class="special">,</span> <span class="identifier">std</span><span class="special">::</span><span class="identifier">size_t</span> <span class="special">&amp;</span><span class="identifier">received_elements</span><span class="special">,</span> <span class="identifier">std</span><span class="special">::</span><span class="identifier">nothrow_t</span> <span class="identifier">nothrow</span><span class="special">);</span>
+<span class="comment">//!Allocates n_elements of elem_bytes bytes. </span>
+<span class="comment">//!Non-throwing version. chain.size() is not increased on failure.</span>
+<span class="keyword">void</span> <span class="identifier">allocate_many</span><span class="special">(</span><span class="identifier">std</span><span class="special">::</span><span class="identifier">nothrow_t</span><span class="special">,</span> <span class="identifier">size_type</span> <span class="identifier">elem_bytes</span><span class="special">,</span> <span class="identifier">size_type</span> <span class="identifier">n_elements</span><span class="special">,</span> <span class="identifier">multiallocation_chain</span> <span class="special">&amp;</span><span class="identifier">chain</span><span class="special">);</span>
 
-<span class="comment">//!Allocates n_elements, each one of elem_sizes[i] bytes. No throwing version.</span>
-<span class="identifier">multiallocation_iterator</span> <span class="identifier">allocate_many</span><span class="special">(</span><span class="keyword">const</span> <span class="identifier">std</span><span class="special">::</span><span class="identifier">size_t</span> <span class="special">*</span><span class="identifier">elem_sizes</span><span class="special">,</span> <span class="identifier">std</span><span class="special">::</span><span class="identifier">size_t</span> <span class="identifier">n_elements</span><span class="special">,</span> <span class="identifier">std</span><span class="special">::</span><span class="identifier">nothrow_t</span> <span class="identifier">nothrow</span><span class="special">);</span>
+<span class="comment">//!Allocates n_elements, each one of</span>
+<span class="comment">//!element_lengths[i]*sizeof_element bytes.</span>
+<span class="comment">//!Non-throwing version. chain.size() is not increased on failure.</span>
+<span class="keyword">void</span> <span class="identifier">allocate_many</span><span class="special">(</span><span class="identifier">std</span><span class="special">::</span><span class="identifier">nothrow_t</span><span class="special">,</span> <span class="keyword">const</span> <span class="identifier">size_type</span> <span class="special">*</span><span class="identifier">elem_sizes</span><span class="special">,</span> <span class="identifier">size_type</span> <span class="identifier">n_elements</span><span class="special">,</span> <span class="identifier">size_type</span> <span class="identifier">sizeof_element</span><span class="special">,</span> <span class="identifier">multiallocation_chain</span> <span class="special">&amp;</span><span class="identifier">chain</span><span class="special">);</span>
+
+<span class="comment">//!Deallocates all elements contained in chain.</span>
+<span class="comment">//!Never throws.</span>
+<span class="keyword">void</span> <span class="identifier">deallocate_many</span><span class="special">(</span><span class="identifier">multiallocation_chain</span> <span class="special">&amp;</span><span class="identifier">chain</span><span class="special">);</span>
 </pre>
-<p>
-          All functions return a <code class="computeroutput"><span class="identifier">multiallocation</span>
-          <span class="identifier">iterator</span></code> that can be used to
-          obtain pointers to memory the user can overwrite. A <code class="computeroutput"><span class="identifier">multiallocation_iterator</span></code>:
-        </p>
-<div class="itemizedlist"><ul class="itemizedlist" type="disc">
-<li class="listitem">
-              Becomes invalidated if the memory is pointing to is deallocated or
-              the next iterators (which previously were reachable with <code class="computeroutput"><span class="keyword">operator</span><span class="special">++</span></code>)
-              become invalid.
-            </li>
-<li class="listitem">
-              Returned from <code class="computeroutput"><span class="identifier">allocate_many</span></code>
-              can be checked in a boolean expression to know if the allocation has
-              been successful.
-            </li>
-<li class="listitem">
-              A default constructed <code class="computeroutput"><span class="identifier">multiallocation</span>
-              <span class="identifier">iterator</span></code> indicates both an
-              invalid iterator and the "end" iterator.
-            </li>
-<li class="listitem">
-              Dereferencing an iterator (<code class="computeroutput"><span class="keyword">operator</span>
-              <span class="special">*()</span></code>) returns a <code class="computeroutput"><span class="keyword">char</span> <span class="special">&amp;</span></code>
-              referencing the first byte user can overwrite in the memory buffer.
-            </li>
-<li class="listitem">
-              The iterator category depends on the memory allocation algorithm, but
-              it's at least a forward iterator.
-            </li>
-</ul></div>
 <p>
           Here is a small example showing all this functionality:
         </p>
@@ -1478,7 +1465,8 @@
    <span class="identifier">managed_shared_memory</span> <span class="identifier">managed_shm</span><span class="special">(</span><span class="identifier">create_only</span><span class="special">,</span><span class="string">"MySharedMemory"</span><span class="special">,</span> <span class="number">65536</span><span class="special">);</span>
 
    <span class="comment">//Allocate 16 elements of 100 bytes in a single call. Non-throwing version.</span>
-   <span class="identifier">multiallocation_chain</span> <span class="identifier">chain</span><span class="special">(</span><span class="identifier">managed_shm</span><span class="special">.</span><span class="identifier">allocate_many</span><span class="special">(</span><span class="number">100</span><span class="special">,</span> <span class="number">16</span><span class="special">,</span> <span class="identifier">std</span><span class="special">::</span><span class="identifier">nothrow</span><span class="special">));</span>
+   <span class="identifier">multiallocation_chain</span> <span class="identifier">chain</span><span class="special">;</span>
+   <span class="identifier">managed_shm</span><span class="special">.</span><span class="identifier">allocate_many</span><span class="special">(</span><span class="identifier">std</span><span class="special">::</span><span class="identifier">nothrow</span><span class="special">,</span> <span class="number">100</span><span class="special">,</span> <span class="number">16</span><span class="special">,</span> <span class="identifier">chain</span><span class="special">);</span>
 
    <span class="comment">//Check if the memory allocation was successful</span>
    <span class="keyword">if</span><span class="special">(</span><span class="identifier">chain</span><span class="special">.</span><span class="identifier">empty</span><span class="special">())</span> <span class="keyword">return</span> <span class="number">1</span><span class="special">;</span>
@@ -1488,8 +1476,7 @@
 
    <span class="comment">//Initialize our data</span>
    <span class="keyword">while</span><span class="special">(!</span><span class="identifier">chain</span><span class="special">.</span><span class="identifier">empty</span><span class="special">()){</span>
-      <span class="keyword">void</span> <span class="special">*</span><span class="identifier">buf</span> <span class="special">=</span> <span class="identifier">chain</span><span class="special">.</span><span class="identifier">front</span><span class="special">();</span>
-      <span class="identifier">chain</span><span class="special">.</span><span class="identifier">pop_front</span><span class="special">();</span>
+      <span class="keyword">void</span> <span class="special">*</span><span class="identifier">buf</span> <span class="special">=</span> <span class="identifier">chain</span><span class="special">.</span><span class="identifier">pop_front</span><span class="special">();</span>
       <span class="identifier">allocated_buffers</span><span class="special">.</span><span class="identifier">push_back</span><span class="special">(</span><span class="identifier">buf</span><span class="special">);</span>
       <span class="comment">//The iterator must be incremented before overwriting memory</span>
       <span class="comment">//because otherwise, the iterator is invalidated.</span>
@@ -1507,8 +1494,8 @@
    <span class="keyword">for</span><span class="special">(</span><span class="identifier">std</span><span class="special">::</span><span class="identifier">size_t</span> <span class="identifier">i</span> <span class="special">=</span> <span class="number">0</span><span class="special">;</span> <span class="identifier">i</span> <span class="special">&lt;</span> <span class="number">10</span><span class="special">;</span> <span class="special">++</span><span class="identifier">i</span><span class="special">)</span>
       <span class="identifier">sizes</span><span class="special">[</span><span class="identifier">i</span><span class="special">]</span> <span class="special">=</span> <span class="identifier">i</span><span class="special">*</span><span class="number">3</span><span class="special">;</span>
 
-   <span class="identifier">chain</span> <span class="special">=</span> <span class="identifier">managed_shm</span><span class="special">.</span><span class="identifier">allocate_many</span><span class="special">(</span><span class="identifier">sizes</span><span class="special">,</span> <span class="number">10</span><span class="special">);</span>
-   <span class="identifier">managed_shm</span><span class="special">.</span><span class="identifier">deallocate_many</span><span class="special">(</span><span class="identifier">boost</span><span class="special">::</span><span class="identifier">move</span><span class="special">(</span><span class="identifier">chain</span><span class="special">));</span>
+   <span class="identifier">managed_shm</span><span class="special">.</span><span class="identifier">allocate_many</span><span class="special">(</span><span class="identifier">sizes</span><span class="special">,</span> <span class="number">10</span><span class="special">,</span> <span class="number">1</span><span class="special">,</span> <span class="identifier">chain</span><span class="special">);</span>
+   <span class="identifier">managed_shm</span><span class="special">.</span><span class="identifier">deallocate_many</span><span class="special">(</span><span class="identifier">chain</span><span class="special">);</span>
    <span class="keyword">return</span> <span class="number">0</span><span class="special">;</span>
 <span class="special">}</span>
 </pre>
@@ -2181,7 +2168,7 @@
           can also be used to place STL compatible containers in the user segment.
         </p>
 <p>
-          <code class="computeroutput"><a class="link" href="../boost/interprocess/basic_managed_ext_id992111.html" title="Class template basic_managed_external_buffer">basic_managed_external_buffer</a></code>
+          <code class="computeroutput"><a class="link" href="../boost/interprocess/basic_managed__idp56421376.html" title="Class template basic_managed_external_buffer">basic_managed_external_buffer</a></code>
           can be also useful to build small databases for embedded systems limiting
           the size of the used memory to a predefined memory chunk, instead of letting
           the database fragment the heap memory.
@@ -2239,7 +2226,7 @@
 <pre class="programlisting"><span class="preprocessor">#include</span> <span class="special">&lt;</span><span class="identifier">boost</span><span class="special">/</span><span class="identifier">interprocess</span><span class="special">/</span><span class="identifier">managed_heap_memory</span><span class="special">.</span><span class="identifier">hpp</span><span class="special">&gt;</span>
 </pre>
 <p>
-          The use is exactly the same as <code class="computeroutput"><a class="link" href="../boost/interprocess/basic_managed_ext_id992111.html" title="Class template basic_managed_external_buffer">basic_managed_external_buffer</a></code>,
+          The use is exactly the same as <code class="computeroutput"><a class="link" href="../boost/interprocess/basic_managed__idp56421376.html" title="Class template basic_managed_external_buffer">basic_managed_external_buffer</a></code>,
           except that memory is created by the managed memory segment itself using
           dynamic (new/delete) memory.
         </p>
@@ -2307,7 +2294,7 @@
       <span class="comment">//memory is full</span>
    <span class="special">}</span>
 
-   <span class="comment">//Let's obtain the new size of the list    </span>
+   <span class="comment">//Let's obtain the new size of the list</span>
    <span class="identifier">MyList</span><span class="special">::</span><span class="identifier">size_type</span> <span class="identifier">new_size</span> <span class="special">=</span> <span class="identifier">mylist</span><span class="special">-&gt;</span><span class="identifier">size</span><span class="special">();</span>
 
    <span class="identifier">assert</span><span class="special">(</span><span class="identifier">new_size</span> <span class="special">&gt;</span> <span class="identifier">old_size</span><span class="special">);</span>
@@ -2369,7 +2356,7 @@
 <span class="comment">//another buffer and checks it against the original data-base</span>
 <span class="keyword">bool</span> <span class="identifier">test_serialize_db</span><span class="special">()</span>
 <span class="special">{</span>
-   <span class="comment">//Typedef data to create a Interprocess map  </span>
+   <span class="comment">//Typedef data to create a Interprocess map</span>
    <span class="keyword">typedef</span> <span class="identifier">std</span><span class="special">::</span><span class="identifier">pair</span><span class="special">&lt;</span><span class="keyword">const</span> <span class="identifier">std</span><span class="special">::</span><span class="identifier">size_t</span><span class="special">,</span> <span class="identifier">std</span><span class="special">::</span><span class="identifier">size_t</span><span class="special">&gt;</span> <span class="identifier">MyPair</span><span class="special">;</span>
    <span class="keyword">typedef</span> <span class="identifier">std</span><span class="special">::</span><span class="identifier">less</span><span class="special">&lt;</span><span class="identifier">std</span><span class="special">::</span><span class="identifier">size_t</span><span class="special">&gt;</span>   <span class="identifier">MyLess</span><span class="special">;</span>
    <span class="keyword">typedef</span> <span class="identifier">node_allocator</span><span class="special">&lt;</span><span class="identifier">MyPair</span><span class="special">,</span> <span class="identifier">managed_external_buffer</span><span class="special">::</span><span class="identifier">segment_manager</span><span class="special">&gt;</span>
@@ -2490,7 +2477,7 @@
 </div>
 <table xmlns:rev="http://www.cs.rpi.edu/~gregod/boost/tools/doc/revision" width="100%"><tr>
 <td align="left"></td>
-<td align="right"><div class="copyright-footer">Copyright &#169; 2005-2011 Ion Gaztanaga<p>
+<td align="right"><div class="copyright-footer">Copyright &#169; 2005-2012 Ion Gaztanaga<p>
         Distributed under the Boost Software License, Version 1.0. (See accompanying
         file LICENSE_1_0.txt or copy at <a href="http://www.boost.org/LICENSE_1_0.txt" target="_top">http://www.boost.org/LICENSE_1_0.txt</a>)
       </p>

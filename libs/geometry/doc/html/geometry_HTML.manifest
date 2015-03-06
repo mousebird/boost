@@ -97,10 +97,8 @@ geometry/reference/algorithms/envelope/return_envelope.html
 geometry/reference/algorithms/equals.html
 geometry/reference/algorithms/expand.html
 geometry/reference/algorithms/for_each.html
-geometry/reference/algorithms/for_each/for_each_point_2_const_version.html
-geometry/reference/algorithms/for_each/for_each_point_2.html
-geometry/reference/algorithms/for_each/for_each_segment_2_const_version.html
-geometry/reference/algorithms/for_each/for_each_segment_2.html
+geometry/reference/algorithms/for_each/for_each_point.html
+geometry/reference/algorithms/for_each/for_each_segment.html
 geometry/reference/algorithms/intersection.html
 geometry/reference/algorithms/intersects.html
 geometry/reference/algorithms/intersects/intersects_1_one_geometry.html

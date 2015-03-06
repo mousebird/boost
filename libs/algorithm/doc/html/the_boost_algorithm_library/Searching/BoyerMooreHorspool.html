@@ -32,8 +32,8 @@
         <span><a name="the_boost_algorithm_library.Searching.BoyerMooreHorspool.overview"></a></span><a class="link" href="BoyerMooreHorspool.html#the_boost_algorithm_library.Searching.BoyerMooreHorspool.overview">Overview</a>
       </h5>
 <p>
-        The header file 'boyer_moore_horspool.hpp' contains an an implementation
-        of the Boyer-Moore-Horspool algorithm for searching sequences of values.
+        The header file 'boyer_moore_horspool.hpp' contains an implementation of
+        the Boyer-Moore-Horspool algorithm for searching sequences of values.
       </p>
 <p>
         The Boyer-Moore-Horspool search algorithm was published by Nigel Horspool
@@ -54,13 +54,12 @@
         and the sequence being searched in as the "corpus".
       </p>
 <p>
-        For flexibility, the Boyer-Moore-Horspool algorithm has has two interfaces;
-        an object-based interface and a procedural one. The object-based interface
-        builds the tables in the constructor, and uses operator () to perform the
-        search. The procedural interface builds the table and does the search all
-        in one step. If you are going to be searching for the same pattern in multiple
-        corpora, then you should use the object interface, and only build the tables
-        once.
+        For flexibility, the Boyer-Moore-Horspool algorithm has two interfaces; an
+        object-based interface and a procedural one. The object-based interface builds
+        the tables in the constructor, and uses operator () to perform the search.
+        The procedural interface builds the table and does the search all in one
+        step. If you are going to be searching for the same pattern in multiple corpora,
+        then you should use the object interface, and only build the tables once.
       </p>
 <p>
         Here is the object interface:

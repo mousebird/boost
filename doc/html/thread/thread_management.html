@@ -5,9 +5,9 @@
 <link rel="stylesheet" href="../../../doc/src/boostbook.css" type="text/css">
 <meta name="generator" content="DocBook XSL Stylesheets V1.76.1">
 <link rel="home" href="../index.html" title="The Boost C++ Libraries BoostBook Documentation Subset">
-<link rel="up" href="../thread.html" title="Chapter&#160;28.&#160;Thread 3.0.1">
+<link rel="up" href="../thread.html" title="Chapter&#160;30.&#160;Thread 4.0.0">
 <link rel="prev" href="future.html" title="Future">
-<link rel="next" href="synchronization.html" title="Synchronization">
+<link rel="next" href="ScopedThreads.html" title="Scoped Threads">
 </head>
 <body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF">
 <table cellpadding="2" width="100%"><tr>
@@ -20,7 +20,7 @@
 </tr></table>
 <hr>
 <div class="spirit-nav">
-<a accesskey="p" href="future.html"><img src="../../../doc/src/images/prev.png" alt="Prev"></a><a accesskey="u" href="../thread.html"><img src="../../../doc/src/images/up.png" alt="Up"></a><a accesskey="h" href="../index.html"><img src="../../../doc/src/images/home.png" alt="Home"></a><a accesskey="n" href="synchronization.html"><img src="../../../doc/src/images/next.png" alt="Next"></a>
+<a accesskey="p" href="future.html"><img src="../../../doc/src/images/prev.png" alt="Prev"></a><a accesskey="u" href="../thread.html"><img src="../../../doc/src/images/up.png" alt="Up"></a><a accesskey="h" href="../index.html"><img src="../../../doc/src/images/home.png" alt="Home"></a><a accesskey="n" href="ScopedThreads.html"><img src="../../../doc/src/images/next.png" alt="Next"></a>
 </div>
 <div class="section">
 <div class="titlepage"><div><div><h2 class="title" style="clear: both">
@@ -31,7 +31,7 @@
 <dt><span class="section"><a href="thread_management.html#thread.thread_management.tutorial">Tutorial</a></span></dt>
 <dt><span class="section"><a href="thread_management.html#thread.thread_management.thread">Class <code class="computeroutput"><span class="identifier">thread</span></code></a></span></dt>
 <dt><span class="section"><a href="thread_management.html#thread.thread_management.this_thread">Namespace <code class="computeroutput"><span class="identifier">this_thread</span></code></a></span></dt>
-<dt><span class="section"><a href="thread_management.html#thread.thread_management.threadgroup">Class <code class="computeroutput"><span class="identifier">thread_group</span></code></a></span></dt>
+<dt><span class="section"><a href="thread_management.html#thread.thread_management.threadgroup">Class <code class="computeroutput"><span class="identifier">thread_group</span></code> EXTENSION</a></span></dt>
 </dl></div>
 <div class="section">
 <div class="titlepage"><div><div><h3 class="title">
@@ -48,7 +48,7 @@
   <span class="special">{</span>
     <span class="identifier">thread</span><span class="special">::</span><span class="identifier">id</span> <span class="identifier">get_id</span><span class="special">()</span> <span class="identifier">noexcept</span><span class="special">;</span>
     <span class="keyword">template</span><span class="special">&lt;</span><span class="keyword">typename</span> <span class="identifier">TimeDuration</span><span class="special">&gt;</span>
-    <span class="keyword">void</span> <span class="identifier">yield</span><span class="special">()</span> <span class="identifier">noexcept</span><span class="special">;</span>
+    <span class="keyword">void</span> <span class="identifier">yield</span><span class="special">()</span> <span class="identifier">noexcept</span><span class="special">;</span> <span class="comment">// DEPRECATED</span>
     <span class="keyword">template</span> <span class="special">&lt;</span><span class="keyword">class</span> <span class="identifier">Clock</span><span class="special">,</span> <span class="keyword">class</span> <span class="identifier">Duration</span><span class="special">&gt;</span>
     <span class="keyword">void</span> <span class="identifier">sleep_until</span><span class="special">(</span><span class="keyword">const</span> <span class="identifier">chrono</span><span class="special">::</span><span class="identifier">time_point</span><span class="special">&lt;</span><span class="identifier">Clock</span><span class="special">,</span> <span class="identifier">Duration</span><span class="special">&gt;&amp;</span> <span class="identifier">abs_time</span><span class="special">);</span>
     <span class="keyword">template</span> <span class="special">&lt;</span><span class="keyword">class</span> <span class="identifier">Rep</span><span class="special">,</span> <span class="keyword">class</span> <span class="identifier">Period</span><span class="special">&gt;</span>
@@ -63,9 +63,10 @@
     <span class="keyword">class</span> <span class="identifier">disable_interruption</span><span class="special">;</span> <span class="comment">// EXTENSION</span>
     <span class="keyword">class</span> <span class="identifier">restore_interruption</span><span class="special">;</span> <span class="comment">// EXTENSION</span>
 
-  <span class="preprocessor">#if</span> <span class="identifier">defined</span> <span class="identifier">BOOST_THREAD_PROVIDES_DEPRECATED_FEATURES_SINCE_V3_0_0</span>
-    <span class="keyword">void</span> <span class="identifier">sleep</span><span class="special">(</span><span class="identifier">TimeDuration</span> <span class="keyword">const</span><span class="special">&amp;</span> <span class="identifier">rel_time</span><span class="special">);</span>
-    <span class="keyword">void</span> <span class="identifier">sleep</span><span class="special">(</span><span class="identifier">system_time</span> <span class="keyword">const</span><span class="special">&amp;</span> <span class="identifier">abs_time</span><span class="special">);</span>
+  <span class="preprocessor">#if</span> <span class="identifier">defined</span> <span class="identifier">BOOST_THREAD_USES_DATETIME</span>
+    <span class="keyword">template</span> <span class="special">&lt;</span><span class="identifier">TimeDuration</span><span class="special">&gt;</span>
+    <span class="keyword">void</span> <span class="identifier">sleep</span><span class="special">(</span><span class="identifier">TimeDuration</span> <span class="keyword">const</span><span class="special">&amp;</span> <span class="identifier">rel_time</span><span class="special">);</span>  <span class="comment">// DEPRECATED</span>
+    <span class="keyword">void</span> <span class="identifier">sleep</span><span class="special">(</span><span class="identifier">system_time</span> <span class="keyword">const</span><span class="special">&amp;</span> <span class="identifier">abs_time</span><span class="special">);</span> <span class="comment">// DEPRECATED</span>
   <span class="preprocessor">#endif</span>
   <span class="special">}</span>
   <span class="keyword">class</span> <span class="identifier">thread_group</span><span class="special">;</span> <span class="comment">// EXTENSION</span>
@@ -84,8 +85,13 @@
         attributes</a></span></dt>
 <dt><span class="section"><a href="thread_management.html#thread.thread_management.tutorial.exceptions">Exceptions
         in thread functions</a></span></dt>
-<dt><span class="section"><a href="thread_management.html#thread.thread_management.tutorial.join">Joining and
-        detaching</a></span></dt>
+<dt><span class="section"><a href="thread_management.html#thread.thread_management.tutorial.detac">Detaching
+        thread</a></span></dt>
+<dt><span class="section"><a href="thread_management.html#thread.thread_management.tutorial.join">Joining a thread</a></span></dt>
+<dt><span class="section"><a href="thread_management.html#thread.thread_management.tutorial.destructor1">Destructor
+        V1</a></span></dt>
+<dt><span class="section"><a href="thread_management.html#thread.thread_management.tutorial.destructor2">Destructor
+        V2</a></span></dt>
 <dt><span class="section"><a href="thread_management.html#thread.thread_management.tutorial.interruption">Interruption</a></span></dt>
 <dt><span class="section"><a href="thread_management.html#thread.thread_management.tutorial.id">Thread IDs</a></span></dt>
 <dt><span class="section"><a href="thread_management.html#thread.thread_management.tutorial.native_in">Using
@@ -273,8 +279,69 @@
 </div>
 <div class="section">
 <div class="titlepage"><div><div><h4 class="title">
-<a name="thread.thread_management.tutorial.join"></a><a class="link" href="thread_management.html#thread.thread_management.tutorial.join" title="Joining and detaching">Joining and
-        detaching</a>
+<a name="thread.thread_management.tutorial.detac"></a><a class="link" href="thread_management.html#thread.thread_management.tutorial.detac" title="Detaching thread">Detaching
+        thread</a>
+</h4></div></div></div>
+<p>
+          A thread can be detached by explicitly invoking the <a class="link" href="thread_management.html#thread.thread_management.thread.detach" title="Member function detach()"><code class="computeroutput"><span class="identifier">detach</span><span class="special">()</span></code></a>
+          member function on the <a class="link" href="thread_management.html#thread.thread_management.thread" title="Class thread"><code class="computeroutput"><span class="identifier">boost</span><span class="special">::</span><span class="identifier">thread</span></code></a> object. In this case, the
+          <a class="link" href="thread_management.html#thread.thread_management.thread" title="Class thread"><code class="computeroutput"><span class="identifier">boost</span><span class="special">::</span><span class="identifier">thread</span></code></a>
+          object ceases to represent the now-detached thread, and instead represents
+          <span class="emphasis"><em>Not-a-Thread</em></span>.
+        </p>
+<pre class="programlisting"><span class="keyword">int</span> <span class="identifier">main</span><span class="special">()</span>
+<span class="special">{</span>
+  <span class="identifier">boost</span><span class="special">::</span><span class="identifier">thread</span> <span class="identifier">t</span><span class="special">(</span><span class="identifier">my_func</span><span class="special">);</span>
+  <span class="identifier">t</span><span class="special">.</span><span class="identifier">detach</span><span class="special">();</span>
+<span class="special">}</span>
+</pre>
+</div>
+<div class="section">
+<div class="titlepage"><div><div><h4 class="title">
+<a name="thread.thread_management.tutorial.join"></a><a class="link" href="thread_management.html#thread.thread_management.tutorial.join" title="Joining a thread">Joining a thread</a>
+</h4></div></div></div>
+<p>
+          In order to wait for a thread of execution to finish, the <a class="link" href="thread_management.html#thread.thread_management.thread.join" title="Member function join()"><code class="computeroutput"><span class="identifier">join</span><span class="special">()</span></code></a>,
+          __join_for or __join_until ( <a class="link" href="thread_management.html#thread.thread_management.thread.timed_join" title="Member function timed_join() DEPRECATED"><code class="computeroutput"><span class="identifier">timed_join</span><span class="special">()</span></code></a>
+          deprecated) member functions of the <a class="link" href="thread_management.html#thread.thread_management.thread" title="Class thread"><code class="computeroutput"><span class="identifier">boost</span><span class="special">::</span><span class="identifier">thread</span></code></a> object must be used. <a class="link" href="thread_management.html#thread.thread_management.thread.join" title="Member function join()"><code class="computeroutput"><span class="identifier">join</span><span class="special">()</span></code></a> will block the calling thread
+          until the thread represented by the <a class="link" href="thread_management.html#thread.thread_management.thread" title="Class thread"><code class="computeroutput"><span class="identifier">boost</span><span class="special">::</span><span class="identifier">thread</span></code></a> object has completed.
+        </p>
+<pre class="programlisting"><span class="keyword">int</span> <span class="identifier">main</span><span class="special">()</span>
+<span class="special">{</span>
+  <span class="identifier">boost</span><span class="special">::</span><span class="identifier">thread</span> <span class="identifier">t</span><span class="special">(</span><span class="identifier">my_func</span><span class="special">);</span>
+  <span class="identifier">t</span><span class="special">.</span><span class="identifier">join</span><span class="special">();</span>
+<span class="special">}</span>
+</pre>
+<p>
+          If the thread of execution represented by the <a class="link" href="thread_management.html#thread.thread_management.thread" title="Class thread"><code class="computeroutput"><span class="identifier">boost</span><span class="special">::</span><span class="identifier">thread</span></code></a> object has already completed,
+          or the <a class="link" href="thread_management.html#thread.thread_management.thread" title="Class thread"><code class="computeroutput"><span class="identifier">boost</span><span class="special">::</span><span class="identifier">thread</span></code></a>
+          object represents <span class="emphasis"><em>Not-a-Thread</em></span>, then <a class="link" href="thread_management.html#thread.thread_management.thread.join" title="Member function join()"><code class="computeroutput"><span class="identifier">join</span><span class="special">()</span></code></a>
+          returns immediately.
+        </p>
+<pre class="programlisting"><span class="keyword">int</span> <span class="identifier">main</span><span class="special">()</span>
+<span class="special">{</span>
+  <span class="identifier">boost</span><span class="special">::</span><span class="identifier">thread</span> <span class="identifier">t</span><span class="special">;</span>
+  <span class="identifier">t</span><span class="special">.</span><span class="identifier">join</span><span class="special">();</span> <span class="comment">// do nothing</span>
+<span class="special">}</span>
+</pre>
+<p>
+          Timed based join are similar, except that a call to __join_for or __join_until
+          will also return if the thread being waited for does not complete when
+          the specified time has elapsed or reached respectively.
+        </p>
+<pre class="programlisting"><span class="keyword">int</span> <span class="identifier">main</span><span class="special">()</span>
+<span class="special">{</span>
+  <span class="identifier">boost</span><span class="special">::</span><span class="identifier">thread</span> <span class="identifier">t</span><span class="special">;</span>
+  <span class="keyword">if</span> <span class="special">(</span> <span class="identifier">t</span><span class="special">.</span><span class="identifier">join_for</span><span class="special">(</span><span class="identifier">boost</span><span class="special">::</span><span class="identifier">chrono</span><span class="special">::</span><span class="identifier">milliseconds</span><span class="special">(</span><span class="number">500</span><span class="special">))</span> <span class="special">)</span>
+    <span class="comment">// do something else</span>
+  <span class="identifier">t</span><span class="special">.</span><span class="identifier">join</span><span class="special">();</span> <span class="comment">// join anyway</span>
+<span class="special">}</span>
+</pre>
+</div>
+<div class="section">
+<div class="titlepage"><div><div><h4 class="title">
+<a name="thread.thread_management.tutorial.destructor1"></a><a class="link" href="thread_management.html#thread.thread_management.tutorial.destructor1" title="Destructor V1">Destructor
+        V1</a>
 </h4></div></div></div>
 <p>
           When the <a class="link" href="thread_management.html#thread.thread_management.thread" title="Class thread"><code class="computeroutput"><span class="identifier">boost</span><span class="special">::</span><span class="identifier">thread</span></code></a> object that represents
@@ -288,19 +355,33 @@
           object ceases to represent the now-detached thread, and instead represents
           <span class="emphasis"><em>Not-a-Thread</em></span>.
         </p>
+</div>
+<div class="section">
+<div class="titlepage"><div><div><h4 class="title">
+<a name="thread.thread_management.tutorial.destructor2"></a><a class="link" href="thread_management.html#thread.thread_management.tutorial.destructor2" title="Destructor V2">Destructor
+        V2</a>
+</h4></div></div></div>
 <p>
-          In order to wait for a thread of execution to finish, the <a class="link" href="thread_management.html#thread.thread_management.thread.join" title="Member function join()"><code class="computeroutput"><span class="identifier">join</span><span class="special">()</span></code></a>
-          or <a class="link" href="thread_management.html#thread.thread_management.thread.timed_join" title="Member function timed_join()"><code class="computeroutput"><span class="identifier">timed_join</span><span class="special">()</span></code></a>
-          member functions of the <a class="link" href="thread_management.html#thread.thread_management.thread" title="Class thread"><code class="computeroutput"><span class="identifier">boost</span><span class="special">::</span><span class="identifier">thread</span></code></a> object must be used. <a class="link" href="thread_management.html#thread.thread_management.thread.join" title="Member function join()"><code class="computeroutput"><span class="identifier">join</span><span class="special">()</span></code></a> will block the calling thread
-          until the thread represented by the <a class="link" href="thread_management.html#thread.thread_management.thread" title="Class thread"><code class="computeroutput"><span class="identifier">boost</span><span class="special">::</span><span class="identifier">thread</span></code></a> object has completed. If
-          the thread of execution represented by the <a class="link" href="thread_management.html#thread.thread_management.thread" title="Class thread"><code class="computeroutput"><span class="identifier">boost</span><span class="special">::</span><span class="identifier">thread</span></code></a> object has already completed,
-          or the <a class="link" href="thread_management.html#thread.thread_management.thread" title="Class thread"><code class="computeroutput"><span class="identifier">boost</span><span class="special">::</span><span class="identifier">thread</span></code></a>
-          object represents <span class="emphasis"><em>Not-a-Thread</em></span>, then <a class="link" href="thread_management.html#thread.thread_management.thread.join" title="Member function join()"><code class="computeroutput"><span class="identifier">join</span><span class="special">()</span></code></a>
-          returns immediately. <a class="link" href="thread_management.html#thread.thread_management.thread.timed_join" title="Member function timed_join()"><code class="computeroutput"><span class="identifier">timed_join</span><span class="special">()</span></code></a>
-          is similar, except that a call to <a class="link" href="thread_management.html#thread.thread_management.thread.timed_join" title="Member function timed_join()"><code class="computeroutput"><span class="identifier">timed_join</span><span class="special">()</span></code></a>
-          will also return if the thread being waited for does not complete when
-          the specified time has elapsed.
+          When the <a class="link" href="thread_management.html#thread.thread_management.thread" title="Class thread"><code class="computeroutput"><span class="identifier">boost</span><span class="special">::</span><span class="identifier">thread</span></code></a> object that represents
+          a thread of execution is destroyed the program terminates if the thread
+          is __joinable__.
         </p>
+<pre class="programlisting"><span class="keyword">int</span> <span class="identifier">main</span><span class="special">()</span>
+<span class="special">{</span>
+  <span class="identifier">boost</span><span class="special">::</span><span class="identifier">thread</span> <span class="identifier">t</span><span class="special">(</span><span class="identifier">my_func</span><span class="special">);</span>
+<span class="special">}</span> <span class="comment">// calls std::terminate()</span>
+</pre>
+<p>
+          You can use a thread_joiner to ensure that the thread has been joined at
+          the thread destructor.
+        </p>
+<pre class="programlisting"><span class="keyword">int</span> <span class="identifier">main</span><span class="special">()</span>
+<span class="special">{</span>
+  <span class="identifier">boost</span><span class="special">::</span><span class="identifier">thread</span> <span class="identifier">t</span><span class="special">(</span><span class="identifier">my_func</span><span class="special">);</span>
+  <span class="identifier">boost</span><span class="special">::</span><span class="identifier">thread_joiner</span> <span class="identifier">g</span><span class="special">(</span><span class="identifier">t</span><span class="special">);</span>
+  <span class="comment">// do someting else</span>
+<span class="special">}</span> <span class="comment">// here the thread_joiner destructor will join the thread before it is destroyed.</span>
+</pre>
 </div>
 <div class="section">
 <div class="titlepage"><div><div><h4 class="title">
@@ -308,7 +389,7 @@
 </h4></div></div></div>
 <p>
           A running thread can be <span class="emphasis"><em>interrupted</em></span> by invoking the
-          <a class="link" href="thread_management.html#thread.thread_management.thread.interrupt" title="Member function interrupt()"><code class="computeroutput"><span class="identifier">interrupt</span><span class="special">()</span></code></a>
+          <a class="link" href="thread_management.html#thread.thread_management.thread.interrupt" title="Member function interrupt() EXTENSION"><code class="computeroutput"><span class="identifier">interrupt</span><span class="special">()</span></code></a>
           member function of the corresponding <a class="link" href="thread_management.html#thread.thread_management.thread" title="Class thread"><code class="computeroutput"><span class="identifier">boost</span><span class="special">::</span><span class="identifier">thread</span></code></a> object. When the interrupted
           thread next executes one of the specified <a class="link" href="thread_management.html#interruption_points"><span class="emphasis"><em>interruption
           points</em></span></a> (or if it is currently <span class="emphasis"><em>blocked</em></span>
@@ -383,13 +464,13 @@
               <a class="link" href="thread_management.html#thread.thread_management.thread.join" title="Member function join()"><code class="computeroutput"><span class="identifier">boost</span><span class="special">::</span><span class="identifier">thread</span><span class="special">::</span><span class="identifier">join</span><span class="special">()</span></code></a>
             </li>
 <li class="listitem">
-              <a class="link" href="thread_management.html#thread.thread_management.thread.timed_join" title="Member function timed_join()"><code class="computeroutput"><span class="identifier">boost</span><span class="special">::</span><span class="identifier">thread</span><span class="special">::</span><span class="identifier">timed_join</span><span class="special">()</span></code></a>
+              <a class="link" href="thread_management.html#thread.thread_management.thread.timed_join" title="Member function timed_join() DEPRECATED"><code class="computeroutput"><span class="identifier">boost</span><span class="special">::</span><span class="identifier">thread</span><span class="special">::</span><span class="identifier">timed_join</span><span class="special">()</span></code></a>
             </li>
 <li class="listitem">
-              <code class="computeroutput"><span class="identifier">boost</span><span class="special">::</span><a class="link" href="thread_management.html#thread.thread_management.thread" title="Class thread"><code class="computeroutput"><span class="identifier">boost</span><span class="special">::</span><span class="identifier">thread</span></code></a><span class="special">::</span><a class="link" href="thread_management.html#thread.thread_management.thread.try_join_for" title="Member function try_join_for() EXTENSION"><code class="computeroutput"><span class="identifier">try_join_for</span></code></a><span class="special">()</span></code>,
+              <code class="computeroutput"><span class="identifier">boost</span><span class="special">::</span><a class="link" href="thread_management.html#thread.thread_management.thread" title="Class thread"><code class="computeroutput"><span class="identifier">thread</span></code></a><span class="special">::</span><a class="link" href="thread_management.html#thread.thread_management.thread.try_join_for" title="Member function try_join_for() EXTENSION"><code class="computeroutput"><span class="identifier">try_join_for</span></code></a><span class="special">()</span></code>,
             </li>
 <li class="listitem">
-              <code class="computeroutput"><span class="identifier">boost</span><span class="special">::</span><a class="link" href="thread_management.html#thread.thread_management.thread" title="Class thread"><code class="computeroutput"><span class="identifier">boost</span><span class="special">::</span><span class="identifier">thread</span></code></a><span class="special">::</span><a class="link" href="thread_management.html#thread.thread_management.thread.try_join_until" title="Member function try_join_until() EXTENSION"><code class="computeroutput"><span class="identifier">try_join_until</span></code></a><span class="special">()</span></code>,
+              <code class="computeroutput"><span class="identifier">boost</span><span class="special">::</span><a class="link" href="thread_management.html#thread.thread_management.thread" title="Class thread"><code class="computeroutput"><span class="identifier">thread</span></code></a><span class="special">::</span><a class="link" href="thread_management.html#thread.thread_management.thread.try_join_until" title="Member function try_join_until() EXTENSION"><code class="computeroutput"><span class="identifier">try_join_until</span></code></a><span class="special">()</span></code>,
             </li>
 <li class="listitem">
               <a class="link" href="synchronization.html#thread.synchronization.condvar_ref.condition_variable.wait" title="void wait(boost::unique_lock&lt;boost::mutex&gt;&amp; lock)"><code class="computeroutput"><span class="identifier">boost</span><span class="special">::</span><span class="identifier">condition_variable</span><span class="special">::</span><span class="identifier">wait</span><span class="special">()</span></code></a>
@@ -416,7 +497,7 @@
               <code class="computeroutput"><span class="identifier">boost</span><span class="special">::</span><a class="link" href="synchronization.html#thread.synchronization.condvar_ref.condition_variable_any" title="Class condition_variable_any"><code class="computeroutput"><span class="identifier">condition_variable_any</span></code></a><span class="special">::</span><a class="link" href="synchronization.html#thread.synchronization.condvar_ref.condition_variable_any.wait_until" title="template &lt;class lock_type, class Clock, class Duration&gt; cv_status wait_until(lock_type&amp; lock, const chrono::time_point&lt;Clock, Duration&gt;&amp; abs_time)"><code class="computeroutput"><span class="identifier">wait_until</span></code></a><span class="special">()</span></code>
             </li>
 <li class="listitem">
-              <a class="link" href="thread_management.html#thread.thread_management.thread.sleep" title="Static member function sleep()"><code class="computeroutput"><span class="identifier">boost</span><span class="special">::</span><span class="identifier">thread</span><span class="special">::</span><span class="identifier">sleep</span><span class="special">()</span></code></a>
+              <a class="link" href="thread_management.html#thread.thread_management.thread.sleep" title="Static member function sleep() DEPRECATED"><code class="computeroutput"><span class="identifier">boost</span><span class="special">::</span><span class="identifier">thread</span><span class="special">::</span><span class="identifier">sleep</span><span class="special">()</span></code></a>
             </li>
 <li class="listitem">
               <code class="computeroutput"><span class="identifier">boost</span><span class="special">::</span><span class="identifier">this_thread</span><span class="special">::</span><a class="link" href="thread_management.html#thread.thread_management.this_thread.sleep_for" title="Non-member function sleep_for()"><code class="computeroutput"><span class="identifier">sleep_for</span></code></a><span class="special">()</span></code>
@@ -515,7 +596,7 @@
           interface, i.e. <code class="computeroutput"><span class="identifier">boost</span><span class="special">::</span><span class="identifier">this_thread</span><span class="special">::</span><span class="identifier">interruption_enabled</span><span class="special">()</span></code>
           returns false. As consequence the use of <code class="computeroutput"><span class="identifier">boost</span><span class="special">::</span><span class="identifier">this_thread</span><span class="special">::</span><span class="identifier">disable_interruption</span></code>
           and <code class="computeroutput"><span class="identifier">boost</span><span class="special">::</span><span class="identifier">this_thread</span><span class="special">::</span><span class="identifier">restore_interruption</span></code> will do nothing
-          and calls to <code class="computeroutput"><span class="identifier">boost</span><span class="special">::</span><span class="identifier">this_thread</span><span class="special">::</span><span class="identifier">interrupt_point</span><span class="special">()</span></code>
+          and calls to <code class="computeroutput"><span class="identifier">boost</span><span class="special">::</span><span class="identifier">this_thread</span><span class="special">::</span><span class="identifier">interruption_point</span><span class="special">()</span></code>
           will be just ignored.
         </p>
 <p>
@@ -567,7 +648,8 @@
 <dt><span class="section"><a href="thread_management.html#thread.thread_management.thread.join">Member function
         <code class="computeroutput"><span class="identifier">join</span><span class="special">()</span></code></a></span></dt>
 <dt><span class="section"><a href="thread_management.html#thread.thread_management.thread.timed_join">Member
-        function <code class="computeroutput"><span class="identifier">timed_join</span><span class="special">()</span></code></a></span></dt>
+        function <code class="computeroutput"><span class="identifier">timed_join</span><span class="special">()</span></code>
+        DEPRECATED</a></span></dt>
 <dt><span class="section"><a href="thread_management.html#thread.thread_management.thread.try_join_for">Member
         function <code class="computeroutput"><span class="identifier">try_join_for</span><span class="special">()</span></code>
         EXTENSION</a></span></dt>
@@ -579,19 +661,22 @@
 <dt><span class="section"><a href="thread_management.html#thread.thread_management.thread.get_id">Member function
         <code class="computeroutput"><span class="identifier">get_id</span><span class="special">()</span></code></a></span></dt>
 <dt><span class="section"><a href="thread_management.html#thread.thread_management.thread.interrupt">Member function
-        <code class="computeroutput"><span class="identifier">interrupt</span><span class="special">()</span></code></a></span></dt>
+        <code class="computeroutput"><span class="identifier">interrupt</span><span class="special">()</span></code>
+        EXTENSION</a></span></dt>
 <dt><span class="section"><a href="thread_management.html#thread.thread_management.thread.hardware_concurrency">Static
         member function <code class="computeroutput"><span class="identifier">hardware_concurrency</span><span class="special">()</span></code></a></span></dt>
 <dt><span class="section"><a href="thread_management.html#thread.thread_management.thread.nativehandle">Member
         function <code class="computeroutput"><span class="identifier">native_handle</span><span class="special">()</span></code></a></span></dt>
 <dt><span class="section"><a href="thread_management.html#thread.thread_management.thread.equals"><code class="computeroutput"><span class="keyword">operator</span><span class="special">==</span></code>
-        DEPRECATED V3</a></span></dt>
+        DEPRECATED</a></span></dt>
 <dt><span class="section"><a href="thread_management.html#thread.thread_management.thread.not_equals"><code class="computeroutput"><span class="keyword">operator</span><span class="special">!=</span></code>
-        DEPRECATED V3</a></span></dt>
+        DEPRECATED</a></span></dt>
 <dt><span class="section"><a href="thread_management.html#thread.thread_management.thread.sleep">Static member
-        function <code class="computeroutput"><span class="identifier">sleep</span><span class="special">()</span></code></a></span></dt>
+        function <code class="computeroutput"><span class="identifier">sleep</span><span class="special">()</span></code>
+        DEPRECATED</a></span></dt>
 <dt><span class="section"><a href="thread_management.html#thread.thread_management.thread.yield">Static member
-        function <code class="computeroutput"><span class="identifier">yield</span><span class="special">()</span></code></a></span></dt>
+        function <code class="computeroutput"><span class="identifier">yield</span><span class="special">()</span></code>
+        DEPRECATED</a></span></dt>
 <dt><span class="section"><a href="thread_management.html#thread.thread_management.thread.swap">Member function
         <code class="computeroutput"><span class="identifier">swap</span><span class="special">()</span></code></a></span></dt>
 <dt><span class="section"><a href="thread_management.html#thread.thread_management.thread.non_member_swap">Non-member
@@ -605,6 +690,8 @@
 <span class="keyword">class</span> <span class="identifier">thread</span>
 <span class="special">{</span>
 <span class="keyword">public</span><span class="special">:</span>
+    <span class="keyword">class</span> <span class="identifier">attributes</span><span class="special">;</span> <span class="comment">// EXTENSION</span>
+
     <span class="identifier">thread</span><span class="special">()</span> <span class="identifier">noexcept</span><span class="special">;</span>
     <span class="identifier">thread</span><span class="special">(</span><span class="keyword">const</span> <span class="identifier">thread</span><span class="special">&amp;)</span> <span class="special">=</span> <span class="keyword">delete</span><span class="special">;</span>
     <span class="identifier">thread</span><span class="special">&amp;</span> <span class="keyword">operator</span><span class="special">=(</span><span class="keyword">const</span> <span class="identifier">thread</span><span class="special">&amp;)</span> <span class="special">=</span> <span class="keyword">delete</span><span class="special">;</span>
@@ -620,15 +707,15 @@
 
     <span class="keyword">template</span> <span class="special">&lt;</span><span class="keyword">class</span> <span class="identifier">F</span><span class="special">,</span><span class="keyword">class</span> <span class="identifier">A1</span><span class="special">,</span><span class="keyword">class</span> <span class="identifier">A2</span><span class="special">,...&gt;</span>
     <span class="identifier">thread</span><span class="special">(</span><span class="identifier">F</span> <span class="identifier">f</span><span class="special">,</span><span class="identifier">A1</span> <span class="identifier">a1</span><span class="special">,</span><span class="identifier">A2</span> <span class="identifier">a2</span><span class="special">,...);</span>
-    <span class="comment">// template &lt;class F, class ...Args&gt; </span>
-    <span class="comment">// explicit thread(F&amp;&amp; f, Args&amp;&amp;... args); // NOT YET IMPLEMENTED</span>
+    <span class="keyword">template</span> <span class="special">&lt;</span><span class="keyword">class</span> <span class="identifier">F</span><span class="special">,</span> <span class="keyword">class</span> <span class="special">...</span><span class="identifier">Args</span><span class="special">&gt;</span>
+    <span class="keyword">explicit</span> <span class="identifier">thread</span><span class="special">(</span><span class="identifier">F</span><span class="special">&amp;&amp;</span> <span class="identifier">f</span><span class="special">,</span> <span class="identifier">Args</span><span class="special">&amp;&amp;...</span> <span class="identifier">args</span><span class="special">);</span>
 
     <span class="keyword">template</span> <span class="special">&lt;</span><span class="keyword">class</span> <span class="identifier">F</span><span class="special">&gt;</span>
     <span class="keyword">explicit</span> <span class="identifier">thread</span><span class="special">(</span><span class="identifier">attributes</span><span class="special">&amp;</span> <span class="identifier">attrs</span><span class="special">,</span> <span class="identifier">F</span> <span class="identifier">f</span><span class="special">);</span> <span class="comment">// EXTENSION</span>
     <span class="keyword">template</span> <span class="special">&lt;</span><span class="keyword">class</span> <span class="identifier">F</span><span class="special">&gt;</span>
     <span class="identifier">thread</span><span class="special">(</span><span class="identifier">attributes</span><span class="special">&amp;</span> <span class="identifier">attrs</span><span class="special">,</span> <span class="identifier">F</span> <span class="special">&amp;&amp;</span><span class="identifier">f</span><span class="special">);</span> <span class="comment">// EXTENSION</span>
-    <span class="comment">// template &lt;class F, class ...Args&gt; </span>
-    <span class="comment">// explicit thread(attributes&amp; attrs, F&amp;&amp; f, Args&amp;&amp;... args); // NOT YET IMPLEMENTED</span>
+    <span class="keyword">template</span> <span class="special">&lt;</span><span class="keyword">class</span> <span class="identifier">F</span><span class="special">,</span> <span class="keyword">class</span> <span class="special">...</span><span class="identifier">Args</span><span class="special">&gt;</span>
+    <span class="keyword">explicit</span> <span class="identifier">thread</span><span class="special">(</span><span class="identifier">attributes</span><span class="special">&amp;</span> <span class="identifier">attrs</span><span class="special">,</span> <span class="identifier">F</span><span class="special">&amp;&amp;</span> <span class="identifier">f</span><span class="special">,</span> <span class="identifier">Args</span><span class="special">&amp;&amp;...</span> <span class="identifier">args</span><span class="special">);</span>
 
     <span class="comment">// move support</span>
     <span class="identifier">thread</span><span class="special">(</span><span class="identifier">thread</span> <span class="special">&amp;&amp;</span> <span class="identifier">x</span><span class="special">)</span> <span class="identifier">noexcept</span><span class="special">;</span>
@@ -637,7 +724,6 @@
     <span class="keyword">void</span> <span class="identifier">swap</span><span class="special">(</span><span class="identifier">thread</span><span class="special">&amp;</span> <span class="identifier">x</span><span class="special">)</span> <span class="identifier">noexcept</span><span class="special">;</span>
 
     <span class="keyword">class</span> <span class="identifier">id</span><span class="special">;</span>
-    <span class="keyword">class</span> <span class="identifier">attributes</span><span class="special">;</span>
 
     <span class="identifier">id</span> <span class="identifier">get_id</span><span class="special">()</span> <span class="keyword">const</span> <span class="identifier">noexcept</span><span class="special">;</span>
 
@@ -659,19 +745,19 @@
     <span class="keyword">bool</span> <span class="identifier">interruption_requested</span><span class="special">()</span> <span class="keyword">const</span> <span class="identifier">noexcept</span><span class="special">;</span> <span class="comment">// EXTENSION</span>
 
 
-<span class="preprocessor">#if</span> <span class="identifier">defined</span> <span class="identifier">BOOST_THREAD_PROVIDES_DEPRECATED_FEATURES_SINCE_V3_0_0</span> <span class="special">||</span> <span class="identifier">defined</span> <span class="identifier">BOOST_THREAD_DONT_USE_CHRONO</span>
-    <span class="keyword">bool</span> <span class="identifier">timed_join</span><span class="special">(</span><span class="keyword">const</span> <span class="identifier">system_time</span><span class="special">&amp;</span> <span class="identifier">wait_until</span><span class="special">);</span>
+<span class="preprocessor">#if</span> <span class="identifier">defined</span> <span class="identifier">BOOST_THREAD_USES_DATETIME</span>
+    <span class="keyword">bool</span> <span class="identifier">timed_join</span><span class="special">(</span><span class="keyword">const</span> <span class="identifier">system_time</span><span class="special">&amp;</span> <span class="identifier">wait_until</span><span class="special">);</span> <span class="comment">// DEPRECATED</span>
     <span class="keyword">template</span><span class="special">&lt;</span><span class="keyword">typename</span> <span class="identifier">TimeDuration</span><span class="special">&gt;</span>
-    <span class="keyword">bool</span> <span class="identifier">timed_join</span><span class="special">(</span><span class="identifier">TimeDuration</span> <span class="keyword">const</span><span class="special">&amp;</span> <span class="identifier">rel_time</span><span class="special">);</span>
+    <span class="keyword">bool</span> <span class="identifier">timed_join</span><span class="special">(</span><span class="identifier">TimeDuration</span> <span class="keyword">const</span><span class="special">&amp;</span> <span class="identifier">rel_time</span><span class="special">);</span> <span class="comment">// DEPRECATED</span>
+    <span class="keyword">static</span> <span class="keyword">void</span> <span class="identifier">sleep</span><span class="special">(</span><span class="keyword">const</span> <span class="identifier">system_time</span><span class="special">&amp;</span> <span class="identifier">xt</span><span class="special">);//</span> <span class="identifier">DEPRECATED</span>
 <span class="preprocessor">#endif</span>
 
-<span class="preprocessor">#if</span> <span class="identifier">defined</span> <span class="identifier">BOOST_THREAD_PROVIDES_DEPRECATED_FEATURES_SINCE_V3_0_0</span>
-    <span class="keyword">bool</span> <span class="keyword">operator</span><span class="special">==(</span><span class="keyword">const</span> <span class="identifier">thread</span><span class="special">&amp;</span> <span class="identifier">other</span><span class="special">)</span> <span class="keyword">const</span><span class="special">;</span>
-    <span class="keyword">bool</span> <span class="keyword">operator</span><span class="special">!=(</span><span class="keyword">const</span> <span class="identifier">thread</span><span class="special">&amp;</span> <span class="identifier">other</span><span class="special">)</span> <span class="keyword">const</span><span class="special">;</span>
+<span class="preprocessor">#if</span> <span class="identifier">defined</span> <span class="identifier">BOOST_THREAD_PROVIDES_THREAD_EQ</span>
+    <span class="keyword">bool</span> <span class="keyword">operator</span><span class="special">==(</span><span class="keyword">const</span> <span class="identifier">thread</span><span class="special">&amp;</span> <span class="identifier">other</span><span class="special">)</span> <span class="keyword">const</span><span class="special">;</span> <span class="comment">// DEPRECATED</span>
+    <span class="keyword">bool</span> <span class="keyword">operator</span><span class="special">!=(</span><span class="keyword">const</span> <span class="identifier">thread</span><span class="special">&amp;</span> <span class="identifier">other</span><span class="special">)</span> <span class="keyword">const</span><span class="special">;</span> <span class="comment">// DEPRECATED</span>
 
-    <span class="keyword">static</span> <span class="keyword">void</span> <span class="identifier">yield</span><span class="special">();</span>
-    <span class="keyword">static</span> <span class="keyword">void</span> <span class="identifier">sleep</span><span class="special">(</span><span class="keyword">const</span> <span class="identifier">system_time</span><span class="special">&amp;</span> <span class="identifier">xt</span><span class="special">);</span>
 <span class="preprocessor">#endif</span>
+    <span class="keyword">static</span> <span class="keyword">void</span> <span class="identifier">yield</span><span class="special">()</span> <span class="identifier">noexcept</span><span class="special">;</span> <span class="comment">// DEPRECATED</span>
 
 <span class="special">};</span>
 
@@ -738,17 +824,43 @@
 </h4></div></div></div>
 <pre class="programlisting"><span class="identifier">thread</span><span class="special">&amp;</span> <span class="keyword">operator</span><span class="special">=(</span><span class="identifier">thread</span><span class="special">&amp;&amp;</span> <span class="identifier">other</span><span class="special">)</span> <span class="identifier">noexcept</span><span class="special">;</span>
 </pre>
+<div class="warning"><table border="0" summary="Warning">
+<tr>
+<td rowspan="2" align="center" valign="top" width="25"><img alt="[Warning]" src="../../../doc/src/images/warning.png"></td>
+<th align="left">Warning</th>
+</tr>
+<tr><td align="left" valign="top">
+<p>
+            DEPRECATED since 3.0.0: BOOST_THREAD_DONT_PROVIDE_THREAD_MOVE_ASSIGN_CALLS_TERMINATE_IF_JOINABLE
+            behavior.
+          </p>
+<p>
+            Available only up to Boost 1.56.
+          </p>
+<p>
+            Join the thread before moving.
+          </p>
+</td></tr>
+</table></div>
 <div class="variablelist">
 <p class="title"><b></b></p>
 <dl>
 <dt><span class="term">Effects:</span></dt>
-<dd><p>
+<dd>
+<p>
                 Transfers ownership of the thread managed by <code class="computeroutput"><span class="identifier">other</span></code>
                 (if any) to <code class="computeroutput"><span class="special">*</span><span class="keyword">this</span></code>.
-                Version 1: If there was a thread previously associated with <code class="computeroutput"><span class="special">*</span><span class="keyword">this</span></code>
-                then that thread is detached, version 2: If the thread is joinable
-                calls to std::terminate.
-              </p></dd>
+              </p>
+<p>
+                - if defined BOOST_THREAD_DONT_PROVIDE_THREAD_MOVE_ASSIGN_CALLS_TERMINATE_IF_JOINABLE:
+                If there was a thread previously associated with <code class="computeroutput"><span class="special">*</span><span class="keyword">this</span></code> then that thread is detached,
+                DEPRECATED
+              </p>
+<p>
+                - if defined BOOST_THREAD_PROVIDES_THREAD_MOVE_ASSIGN_CALLS_TERMINATE_IF_JOINABLE:
+                If the thread is joinable calls to std::terminate.
+              </p>
+</dd>
 <dt><span class="term">Postconditions:</span></dt>
 <dd><p>
                 <code class="computeroutput"><span class="identifier">other</span><span class="special">-&gt;</span><span class="identifier">get_id</span><span class="special">()==</span><span class="identifier">thread</span><span class="special">::</span><span class="identifier">id</span><span class="special">()</span></code>
@@ -1003,19 +1115,52 @@
 </h4></div></div></div>
 <pre class="programlisting"><span class="special">~</span><span class="identifier">thread</span><span class="special">();</span>
 </pre>
+<div class="warning"><table border="0" summary="Warning">
+<tr>
+<td rowspan="2" align="center" valign="top" width="25"><img alt="[Warning]" src="../../../doc/src/images/warning.png"></td>
+<th align="left">Warning</th>
+</tr>
+<tr><td align="left" valign="top">
+<p>
+            DEPRECATED since 3.0.0: BOOST_THREAD_DONT_PROVIDE_THREAD_DESTRUCTOR_CALLS_TERMINATE_IF_JOINABLE
+            behavior.
+          </p>
+<p>
+            Available only up to Boost 1.56.
+          </p>
+<p>
+            Join the thread before destroying or use a scoped thread.
+          </p>
+</td></tr>
+</table></div>
 <div class="variablelist">
 <p class="title"><b></b></p>
 <dl>
 <dt><span class="term">Effects:</span></dt>
-<dd><p>
-                Version 1: If <code class="computeroutput"><span class="special">*</span><span class="keyword">this</span></code>
+<dd>
+<p>
+                - if defined BOOST_THREAD_DONT_PROVIDE_THREAD_DESTRUCTOR_CALLS_TERMINATE_IF_JOINABLE:
+                If <code class="computeroutput"><span class="special">*</span><span class="keyword">this</span></code>
                 has an associated thread of execution, calls <a class="link" href="thread_management.html#thread.thread_management.thread.detach" title="Member function detach()"><code class="computeroutput"><span class="identifier">detach</span><span class="special">()</span></code></a>,
-                Version 2: If the thread is joinable calls to std::terminate. Destroys
-                <code class="computeroutput"><span class="special">*</span><span class="keyword">this</span></code>.
-              </p></dd>
+                DEPRECATED
+              </p>
+<p>
+                - BOOST_THREAD_PROVIDES_THREAD_DESTRUCTOR_CALLS_TERMINATE_IF_JOINABLE:
+                If the thread is joinable calls to std::terminate. Destroys <code class="computeroutput"><span class="special">*</span><span class="keyword">this</span></code>.
+              </p>
+</dd>
 <dt><span class="term">Throws:</span></dt>
 <dd><p>
                 Nothing.
+              </p></dd>
+<dt><span class="term">Note:</span></dt>
+<dd><p>
+                Either implicitly detaching or joining a <code class="computeroutput"><span class="identifier">joinable</span><span class="special">()</span></code> thread in its destructor could
+                result in difficult to debug correctness (for <code class="computeroutput"><span class="identifier">detach</span></code>)
+                or performance (for <code class="computeroutput"><span class="identifier">join</span></code>)
+                bugs encountered only when an exception is raised. Thus the programmer
+                must ensure that the destructor is never executed while the thread
+                is still joinable.
               </p></dd>
 </dl>
 </div>
@@ -1063,6 +1208,16 @@
                 refers to a thread of execution, waits for that thread of execution
                 to complete.
               </p></dd>
+<dt><span class="term">Synchronization:</span></dt>
+<dd><p>
+                The completion of the thread represented by <code class="computeroutput"><span class="special">*</span><span class="keyword">this</span></code> synchronizes with the corresponding
+                successful <code class="computeroutput"><span class="identifier">join</span><span class="special">()</span></code>
+                return.
+              </p></dd>
+<dt><span class="term">Note:</span></dt>
+<dd><p>
+                Operations on *this are not synchronized.
+              </p></dd>
 <dt><span class="term">Postconditions:</span></dt>
 <dd><p>
                 If <code class="computeroutput"><span class="special">*</span><span class="keyword">this</span></code>
@@ -1076,10 +1231,17 @@
                 thread of execution is interrupted or <code class="computeroutput"><span class="identifier">system_error</span></code>
               </p></dd>
 <dt><span class="term">Error Conditions:</span></dt>
-<dd><p>
+<dd>
+<p>
                 <span class="bold"><strong>resource_deadlock_would_occur</strong></span>: if
-                deadlock is detected or this-&gt;get_id() == std::this_thread::get_id().
-              </p></dd>
+                deadlock is detected or <code class="computeroutput"><span class="keyword">this</span><span class="special">-&gt;</span><span class="identifier">get_id</span><span class="special">()</span> <span class="special">==</span> <span class="identifier">boost</span><span class="special">::</span><span class="identifier">this_thread</span><span class="special">::</span><span class="identifier">get_id</span><span class="special">()</span></code>.
+              </p>
+<p>
+                <span class="bold"><strong>invalid_argument</strong></span>: if the thread
+                is not joinable and <code class="computeroutput"><span class="identifier">BOOST_THREAD_TRHOW_IF_PRECONDITION_NOT_SATISFIED</span></code>
+                is defined.
+              </p>
+</dd>
 <dt><span class="term">Notes:</span></dt>
 <dd><p>
                 <code class="computeroutput"><span class="identifier">join</span><span class="special">()</span></code>
@@ -1091,20 +1253,38 @@
 </div>
 <div class="section">
 <div class="titlepage"><div><div><h4 class="title">
-<a name="thread.thread_management.thread.timed_join"></a><a class="link" href="thread_management.html#thread.thread_management.thread.timed_join" title="Member function timed_join()">Member
-        function <code class="computeroutput"><span class="identifier">timed_join</span><span class="special">()</span></code></a>
+<a name="thread.thread_management.thread.timed_join"></a><a class="link" href="thread_management.html#thread.thread_management.thread.timed_join" title="Member function timed_join() DEPRECATED">Member
+        function <code class="computeroutput"><span class="identifier">timed_join</span><span class="special">()</span></code>
+        DEPRECATED</a>
 </h4></div></div></div>
 <pre class="programlisting"><span class="keyword">bool</span> <span class="identifier">timed_join</span><span class="special">(</span><span class="keyword">const</span> <span class="identifier">system_time</span><span class="special">&amp;</span> <span class="identifier">wait_until</span><span class="special">);</span>
 
 <span class="keyword">template</span><span class="special">&lt;</span><span class="keyword">typename</span> <span class="identifier">TimeDuration</span><span class="special">&gt;</span>
 <span class="keyword">bool</span> <span class="identifier">timed_join</span><span class="special">(</span><span class="identifier">TimeDuration</span> <span class="keyword">const</span><span class="special">&amp;</span> <span class="identifier">rel_time</span><span class="special">);</span>
 </pre>
+<div class="warning"><table border="0" summary="Warning">
+<tr>
+<td rowspan="2" align="center" valign="top" width="25"><img alt="[Warning]" src="../../../doc/src/images/warning.png"></td>
+<th align="left">Warning</th>
+</tr>
+<tr><td align="left" valign="top">
+<p>
+            DEPRECATED since 3.00.
+          </p>
+<p>
+            Available only up to Boost 1.56.
+          </p>
+<p>
+            Use instead <a class="link" href="thread_management.html#thread.thread_management.thread.try_join_for" title="Member function try_join_for() EXTENSION"><code class="computeroutput"><span class="identifier">try_join_for</span></code></a>, <a class="link" href="thread_management.html#thread.thread_management.thread.try_join_until" title="Member function try_join_until() EXTENSION"><code class="computeroutput"><span class="identifier">try_join_until</span></code></a>.
+          </p>
+</td></tr>
+</table></div>
 <div class="variablelist">
 <p class="title"><b></b></p>
 <dl>
 <dt><span class="term">Preconditions:</span></dt>
 <dd><p>
-                <code class="computeroutput"><span class="keyword">this</span><span class="special">-&gt;</span><span class="identifier">get_id</span><span class="special">()!=</span><span class="identifier">boost</span><span class="special">::</span><span class="identifier">this_thread</span><span class="special">::</span><span class="identifier">get_id</span><span class="special">()</span></code>
+                the thread is joinable.
               </p></dd>
 <dt><span class="term">Effects:</span></dt>
 <dd><p>
@@ -1138,10 +1318,17 @@
                 thread of execution is interrupted or <code class="computeroutput"><span class="identifier">system_error</span></code>
               </p></dd>
 <dt><span class="term">Error Conditions:</span></dt>
-<dd><p>
+<dd>
+<p>
                 <span class="bold"><strong>resource_deadlock_would_occur</strong></span>: if
-                deadlock is detected or this-&gt;get_id() == std::this_thread::get_id().
-              </p></dd>
+                deadlock is detected or this-&gt;get_id() == boost::this_thread::get_id().
+              </p>
+<p>
+                <span class="bold"><strong>invalid_argument</strong></span>: if the thread
+                is not joinable and BOOST_THREAD_TRHOW_IF_PRECONDITION_NOT_SATISFIED
+                is defined.
+              </p>
+</dd>
 <dt><span class="term">Notes:</span></dt>
 <dd><p>
                 <code class="computeroutput"><span class="identifier">timed_join</span><span class="special">()</span></code>
@@ -1165,7 +1352,7 @@
 <dl>
 <dt><span class="term">Preconditions:</span></dt>
 <dd><p>
-                <code class="computeroutput"><span class="keyword">this</span><span class="special">-&gt;</span><span class="identifier">get_id</span><span class="special">()!=</span><span class="identifier">boost</span><span class="special">::</span><span class="identifier">this_thread</span><span class="special">::</span><span class="identifier">get_id</span><span class="special">()</span></code>
+                the thread is joinable.
               </p></dd>
 <dt><span class="term">Effects:</span></dt>
 <dd><p>
@@ -1198,10 +1385,17 @@
                 thread of execution is interrupted or <code class="computeroutput"><span class="identifier">system_error</span></code>
               </p></dd>
 <dt><span class="term">Error Conditions:</span></dt>
-<dd><p>
+<dd>
+<p>
                 <span class="bold"><strong>resource_deadlock_would_occur</strong></span>: if
-                deadlock is detected or this-&gt;get_id() == std::this_thread::get_id().
-              </p></dd>
+                deadlock is detected or this-&gt;get_id() == boost::this_thread::get_id().
+              </p>
+<p>
+                <span class="bold"><strong>invalid_argument</strong></span>: if the thread
+                is not joinable and BOOST_THREAD_TRHOW_IF_PRECONDITION_NOT_SATISFIED
+                is defined.
+              </p>
+</dd>
 <dt><span class="term">Notes:</span></dt>
 <dd><p>
                 <code class="computeroutput"><span class="identifier">try_join_for</span><span class="special">()</span></code>
@@ -1225,7 +1419,7 @@
 <dl>
 <dt><span class="term">Preconditions:</span></dt>
 <dd><p>
-                <code class="computeroutput"><span class="keyword">this</span><span class="special">-&gt;</span><span class="identifier">get_id</span><span class="special">()!=</span><span class="identifier">boost</span><span class="special">::</span><span class="identifier">this_thread</span><span class="special">::</span><span class="identifier">get_id</span><span class="special">()</span></code>
+                the thread is joinable.
               </p></dd>
 <dt><span class="term">Effects:</span></dt>
 <dd><p>
@@ -1258,10 +1452,17 @@
                 thread of execution is interrupted or <code class="computeroutput"><span class="identifier">system_error</span></code>
               </p></dd>
 <dt><span class="term">Error Conditions:</span></dt>
-<dd><p>
+<dd>
+<p>
                 <span class="bold"><strong>resource_deadlock_would_occur</strong></span>: if
-                deadlock is detected or this-&gt;get_id() == std::this_thread::get_id().
-              </p></dd>
+                deadlock is detected or this-&gt;get_id() == boost::this_thread::get_id().
+              </p>
+<p>
+                <span class="bold"><strong>invalid_argument</strong></span>: if the thread
+                is not joinable and BOOST_THREAD_TRHOW_IF_PRECONDITION_NOT_SATISFIED
+                is defined.
+              </p>
+</dd>
 <dt><span class="term">Notes:</span></dt>
 <dd><p>
                 <code class="computeroutput"><span class="identifier">try_join_until</span><span class="special">()</span></code>
@@ -1276,7 +1477,7 @@
 <a name="thread.thread_management.thread.detach"></a><a class="link" href="thread_management.html#thread.thread_management.thread.detach" title="Member function detach()">Member function
         <code class="computeroutput"><span class="identifier">detach</span><span class="special">()</span></code></a>
 </h4></div></div></div>
-<pre class="programlisting"><span class="keyword">void</span> <span class="identifier">detach</span><span class="special">()</span> <span class="identifier">noexcept</span><span class="special">;</span>
+<pre class="programlisting"><span class="keyword">void</span> <span class="identifier">detach</span><span class="special">();</span>
 </pre>
 <div class="variablelist">
 <p class="title"><b></b></p>
@@ -1298,8 +1499,20 @@
               </p></dd>
 <dt><span class="term">Throws:</span></dt>
 <dd><p>
-                Nothing
+                <code class="computeroutput"><span class="identifier">system_error</span></code>
               </p></dd>
+<dt><span class="term">Error Conditions:</span></dt>
+<dd>
+<p>
+                <span class="bold"><strong>no_such_process</strong></span>: if the thread is
+                not valid.
+              </p>
+<p>
+                <span class="bold"><strong>invalid_argument</strong></span>: if the thread
+                is not joinable and BOOST_THREAD_TRHOW_IF_PRECONDITION_NOT_SATISFIED
+                is defined.
+              </p>
+</dd>
 </dl>
 </div>
 </div>
@@ -1328,8 +1541,9 @@
 </div>
 <div class="section">
 <div class="titlepage"><div><div><h4 class="title">
-<a name="thread.thread_management.thread.interrupt"></a><a class="link" href="thread_management.html#thread.thread_management.thread.interrupt" title="Member function interrupt()">Member function
-        <code class="computeroutput"><span class="identifier">interrupt</span><span class="special">()</span></code></a>
+<a name="thread.thread_management.thread.interrupt"></a><a class="link" href="thread_management.html#thread.thread_management.thread.interrupt" title="Member function interrupt() EXTENSION">Member function
+        <code class="computeroutput"><span class="identifier">interrupt</span><span class="special">()</span></code>
+        EXTENSION</a>
 </h4></div></div></div>
 <pre class="programlisting"><span class="keyword">void</span> <span class="identifier">interrupt</span><span class="special">();</span>
 </pre>
@@ -1403,11 +1617,29 @@
 </div>
 <div class="section">
 <div class="titlepage"><div><div><h4 class="title">
-<a name="thread.thread_management.thread.equals"></a><a class="link" href="thread_management.html#thread.thread_management.thread.equals" title="operator== DEPRECATED V3"><code class="computeroutput"><span class="keyword">operator</span><span class="special">==</span></code>
-        DEPRECATED V3</a>
+<a name="thread.thread_management.thread.equals"></a><a class="link" href="thread_management.html#thread.thread_management.thread.equals" title="operator== DEPRECATED"><code class="computeroutput"><span class="keyword">operator</span><span class="special">==</span></code>
+        DEPRECATED</a>
 </h4></div></div></div>
 <pre class="programlisting"><span class="keyword">bool</span> <span class="keyword">operator</span><span class="special">==(</span><span class="keyword">const</span> <span class="identifier">thread</span><span class="special">&amp;</span> <span class="identifier">other</span><span class="special">)</span> <span class="keyword">const</span><span class="special">;</span>
 </pre>
+<div class="warning"><table border="0" summary="Warning">
+<tr>
+<td rowspan="2" align="center" valign="top" width="25"><img alt="[Warning]" src="../../../doc/src/images/warning.png"></td>
+<th align="left">Warning</th>
+</tr>
+<tr><td align="left" valign="top">
+<p>
+            DEPRECATED since 4.0.0.
+          </p>
+<p>
+            Available only up to Boost 1.58.
+          </p>
+<p>
+            Use <code class="computeroutput"><span class="identifier">a</span><span class="special">.</span><a class="link" href="thread_management.html#thread.thread_management.thread.get_id" title="Member function get_id()"><code class="computeroutput"><span class="identifier">get_id</span></code></a><span class="special">()==</span><span class="identifier">b</span><span class="special">.</span><a class="link" href="thread_management.html#thread.thread_management.thread.get_id" title="Member function get_id()"><code class="computeroutput"><span class="identifier">get_id</span></code></a><span class="special">()</span></code>
+            instead`.
+          </p>
+</td></tr>
+</table></div>
 <div class="variablelist">
 <p class="title"><b></b></p>
 <dl>
@@ -1415,21 +1647,34 @@
 <dd><p>
                 <code class="computeroutput"><span class="identifier">get_id</span><span class="special">()==</span><span class="identifier">other</span><span class="special">.</span><span class="identifier">get_id</span><span class="special">()</span></code>
               </p></dd>
-<dt><span class="term">See:</span></dt>
-<dd><p>
-                Use <code class="computeroutput"><span class="identifier">a</span><span class="special">.</span><a class="link" href="thread_management.html#thread.thread_management.thread.get_id" title="Member function get_id()"><code class="computeroutput"><span class="identifier">get_id</span></code></a><span class="special">()==</span><span class="identifier">b</span><span class="special">.</span><a class="link" href="thread_management.html#thread.thread_management.thread.get_id" title="Member function get_id()"><code class="computeroutput"><span class="identifier">get_id</span></code></a><span class="special">()</span></code>
-                instead
-              </p></dd>
 </dl>
 </div>
 </div>
 <div class="section">
 <div class="titlepage"><div><div><h4 class="title">
-<a name="thread.thread_management.thread.not_equals"></a><a class="link" href="thread_management.html#thread.thread_management.thread.not_equals" title="operator!= DEPRECATED V3"><code class="computeroutput"><span class="keyword">operator</span><span class="special">!=</span></code>
-        DEPRECATED V3</a>
+<a name="thread.thread_management.thread.not_equals"></a><a class="link" href="thread_management.html#thread.thread_management.thread.not_equals" title="operator!= DEPRECATED"><code class="computeroutput"><span class="keyword">operator</span><span class="special">!=</span></code>
+        DEPRECATED</a>
 </h4></div></div></div>
 <pre class="programlisting"><span class="keyword">bool</span> <span class="keyword">operator</span><span class="special">!=(</span><span class="keyword">const</span> <span class="identifier">thread</span><span class="special">&amp;</span> <span class="identifier">other</span><span class="special">)</span> <span class="keyword">const</span><span class="special">;</span>
 </pre>
+<div class="warning"><table border="0" summary="Warning">
+<tr>
+<td rowspan="2" align="center" valign="top" width="25"><img alt="[Warning]" src="../../../doc/src/images/warning.png"></td>
+<th align="left">Warning</th>
+</tr>
+<tr><td align="left" valign="top">
+<p>
+            DEPRECATED since 4.0.0.
+          </p>
+<p>
+            Available only up to Boost 1.58.
+          </p>
+<p>
+            Use <code class="computeroutput"><span class="identifier">a</span><span class="special">.</span><a class="link" href="thread_management.html#thread.thread_management.thread.get_id" title="Member function get_id()"><code class="computeroutput"><span class="identifier">get_id</span></code></a><span class="special">()!=</span><span class="identifier">b</span><span class="special">.</span><a class="link" href="thread_management.html#thread.thread_management.thread.get_id" title="Member function get_id()"><code class="computeroutput"><span class="identifier">get_id</span></code></a><span class="special">()</span></code>
+            instead`.
+          </p>
+</td></tr>
+</table></div>
 <div class="variablelist">
 <p class="title"><b></b></p>
 <dl>
@@ -1437,21 +1682,35 @@
 <dd><p>
                 <code class="computeroutput"><span class="identifier">get_id</span><span class="special">()!=</span><span class="identifier">other</span><span class="special">.</span><span class="identifier">get_id</span><span class="special">()</span></code>
               </p></dd>
-<dt><span class="term">See:</span></dt>
-<dd><p>
-                Use <code class="computeroutput"><span class="identifier">a</span><span class="special">.</span><a class="link" href="thread_management.html#thread.thread_management.thread.get_id" title="Member function get_id()"><code class="computeroutput"><span class="identifier">get_id</span></code></a><span class="special">()!=</span><span class="identifier">b</span><span class="special">.</span><a class="link" href="thread_management.html#thread.thread_management.thread.get_id" title="Member function get_id()"><code class="computeroutput"><span class="identifier">get_id</span></code></a><span class="special">()</span></code>
-                instead`
-              </p></dd>
 </dl>
 </div>
 </div>
 <div class="section">
 <div class="titlepage"><div><div><h4 class="title">
-<a name="thread.thread_management.thread.sleep"></a><a class="link" href="thread_management.html#thread.thread_management.thread.sleep" title="Static member function sleep()">Static member
-        function <code class="computeroutput"><span class="identifier">sleep</span><span class="special">()</span></code></a>
+<a name="thread.thread_management.thread.sleep"></a><a class="link" href="thread_management.html#thread.thread_management.thread.sleep" title="Static member function sleep() DEPRECATED">Static member
+        function <code class="computeroutput"><span class="identifier">sleep</span><span class="special">()</span></code>
+        DEPRECATED</a>
 </h4></div></div></div>
 <pre class="programlisting"><span class="keyword">void</span> <span class="identifier">sleep</span><span class="special">(</span><span class="identifier">system_time</span> <span class="keyword">const</span><span class="special">&amp;</span> <span class="identifier">abs_time</span><span class="special">);</span>
 </pre>
+<div class="warning"><table border="0" summary="Warning">
+<tr>
+<td rowspan="2" align="center" valign="top" width="25"><img alt="[Warning]" src="../../../doc/src/images/warning.png"></td>
+<th align="left">Warning</th>
+</tr>
+<tr><td align="left" valign="top">
+<p>
+            DEPRECATED since 3.0.0.
+          </p>
+<p>
+            Available only up to Boost 1.56.
+          </p>
+<p>
+            Use <code class="computeroutput"><span class="identifier">this_thread</span><span class="special">::</span><a class="link" href="thread_management.html#thread.thread_management.this_thread.sleep_for" title="Non-member function sleep_for()"><code class="computeroutput"><span class="identifier">sleep_for</span></code></a><span class="special">()</span></code>
+            or <code class="computeroutput"><span class="identifier">this_thread</span><span class="special">::</span><a class="link" href="thread_management.html#thread.thread_management.this_thread.sleep_until" title="Non-member function sleep_until()"><code class="computeroutput"><span class="identifier">sleep_until</span></code></a><span class="special">()</span></code>.
+          </p>
+</td></tr>
+</table></div>
 <div class="variablelist">
 <p class="title"><b></b></p>
 <dl>
@@ -1470,31 +1729,40 @@
                 is one of the predefined <a class="link" href="thread_management.html#interruption_points"><span class="emphasis"><em>interruption
                 points</em></span></a>.
               </p></dd>
-<dt><span class="term">See:</span></dt>
-<dd><p>
-                Use <code class="computeroutput"><span class="identifier">this_thread</span><span class="special">::</span><a class="link" href="thread_management.html#thread.thread_management.this_thread.sleep_for" title="Non-member function sleep_for()"><code class="computeroutput"><span class="identifier">sleep_for</span></code></a><span class="special">()</span></code>
-                or <code class="computeroutput"><span class="identifier">this_thread</span><span class="special">::</span><a class="link" href="thread_management.html#thread.thread_management.this_thread.sleep_until" title="Non-member function sleep_until()"><code class="computeroutput"><span class="identifier">sleep_until</span></code></a><span class="special">()</span></code>
-              </p></dd>
 </dl>
 </div>
 </div>
 <div class="section">
 <div class="titlepage"><div><div><h4 class="title">
-<a name="thread.thread_management.thread.yield"></a><a class="link" href="thread_management.html#thread.thread_management.thread.yield" title="Static member function yield()">Static member
-        function <code class="computeroutput"><span class="identifier">yield</span><span class="special">()</span></code></a>
+<a name="thread.thread_management.thread.yield"></a><a class="link" href="thread_management.html#thread.thread_management.thread.yield" title="Static member function yield() DEPRECATED">Static member
+        function <code class="computeroutput"><span class="identifier">yield</span><span class="special">()</span></code>
+        DEPRECATED</a>
 </h4></div></div></div>
 <pre class="programlisting"><span class="keyword">void</span> <span class="identifier">yield</span><span class="special">();</span>
 </pre>
+<div class="warning"><table border="0" summary="Warning">
+<tr>
+<td rowspan="2" align="center" valign="top" width="25"><img alt="[Warning]" src="../../../doc/src/images/warning.png"></td>
+<th align="left">Warning</th>
+</tr>
+<tr><td align="left" valign="top">
+<p>
+            DEPRECATED since 3.0.0.
+          </p>
+<p>
+            Available only up to Boost 1.56.
+          </p>
+<p>
+            Use <code class="computeroutput"><span class="identifier">this_thread</span><span class="special">::</span><a class="link" href="thread_management.html#thread.thread_management.this_thread.yield" title="Non-member function yield()"><code class="computeroutput"><span class="identifier">yield</span></code></a><span class="special">()</span></code>.
+          </p>
+</td></tr>
+</table></div>
 <div class="variablelist">
 <p class="title"><b></b></p>
 <dl>
 <dt><span class="term">Effects:</span></dt>
 <dd><p>
                 See <a class="link" href="thread_management.html#thread.thread_management.this_thread.yield" title="Non-member function yield()"><code class="computeroutput"><span class="identifier">boost</span><span class="special">::</span><span class="identifier">this_thread</span><span class="special">::</span><span class="identifier">yield</span><span class="special">()</span></code></a>.
-              </p></dd>
-<dt><span class="term">See:</span></dt>
-<dd><p>
-                Use <code class="computeroutput"><span class="identifier">this_thread</span><span class="special">::</span><a class="link" href="thread_management.html#thread.thread_management.this_thread.yield" title="Non-member function yield()"><code class="computeroutput"><span class="identifier">yield</span></code></a><span class="special">()</span></code>
               </p></dd>
 </dl>
 </div>
@@ -1914,7 +2182,8 @@
 <dt><span class="section"><a href="thread_management.html#thread.thread_management.this_thread.interruption_enabled">Non-member
         function <code class="computeroutput"><span class="identifier">interruption_enabled</span><span class="special">()</span></code> EXTENSION</a></span></dt>
 <dt><span class="section"><a href="thread_management.html#thread.thread_management.this_thread.sleep">Non-member
-        function <code class="computeroutput"><span class="identifier">sleep</span><span class="special">()</span></code></a></span></dt>
+        function <code class="computeroutput"><span class="identifier">sleep</span><span class="special">()</span></code>
+        DEPRECATED</a></span></dt>
 <dt><span class="section"><a href="thread_management.html#thread.thread_management.this_thread.sleep_until">Non-member
         function <code class="computeroutput"><span class="identifier">sleep_until</span><span class="special">()</span></code></a></span></dt>
 <dt><span class="section"><a href="thread_management.html#thread.thread_management.this_thread.sleep_for">Non-member
@@ -1947,9 +2216,9 @@
     <span class="keyword">class</span> <span class="identifier">disable_interruption</span><span class="special">;</span> <span class="comment">// EXTENSION</span>
     <span class="keyword">class</span> <span class="identifier">restore_interruption</span><span class="special">;</span> <span class="comment">// EXTENSION</span>
 
-  <span class="preprocessor">#if</span> <span class="identifier">defined</span> <span class="identifier">BOOST_THREAD_PROVIDES_DEPRECATED_FEATURES_SINCE_V3_0_0</span> <span class="special">||</span> <span class="identifier">defined</span> <span class="identifier">BOOST_THREAD_DONT_USE_CHRONO</span>
-    <span class="keyword">void</span> <span class="identifier">sleep</span><span class="special">(</span><span class="identifier">TimeDuration</span> <span class="keyword">const</span><span class="special">&amp;</span> <span class="identifier">rel_time</span><span class="special">);</span>
-    <span class="keyword">void</span> <span class="identifier">sleep</span><span class="special">(</span><span class="identifier">system_time</span> <span class="keyword">const</span><span class="special">&amp;</span> <span class="identifier">abs_time</span><span class="special">)</span>
+  <span class="preprocessor">#if</span> <span class="identifier">defined</span> <span class="identifier">BOOST_THREAD_USES_DATETIME</span>
+    <span class="keyword">void</span> <span class="identifier">sleep</span><span class="special">(</span><span class="identifier">TimeDuration</span> <span class="keyword">const</span><span class="special">&amp;</span> <span class="identifier">rel_time</span><span class="special">);</span> <span class="comment">// DEPRECATED</span>
+    <span class="keyword">void</span> <span class="identifier">sleep</span><span class="special">(</span><span class="identifier">system_time</span> <span class="keyword">const</span><span class="special">&amp;</span> <span class="identifier">abs_time</span><span class="special">);</span>  <span class="comment">// DEPRECATED</span>
   <span class="preprocessor">#endif</span>
   <span class="special">}</span>
 <span class="special">}</span>
@@ -2068,8 +2337,9 @@
 </div>
 <div class="section">
 <div class="titlepage"><div><div><h4 class="title">
-<a name="thread.thread_management.this_thread.sleep"></a><a class="link" href="thread_management.html#thread.thread_management.this_thread.sleep" title="Non-member function sleep()">Non-member
-        function <code class="computeroutput"><span class="identifier">sleep</span><span class="special">()</span></code></a>
+<a name="thread.thread_management.this_thread.sleep"></a><a class="link" href="thread_management.html#thread.thread_management.this_thread.sleep" title="Non-member function sleep() DEPRECATED">Non-member
+        function <code class="computeroutput"><span class="identifier">sleep</span><span class="special">()</span></code>
+        DEPRECATED</a>
 </h4></div></div></div>
 <pre class="programlisting"><span class="preprocessor">#include</span> <span class="special">&lt;</span><span class="identifier">boost</span><span class="special">/</span><span class="identifier">thread</span><span class="special">/</span><span class="identifier">thread</span><span class="special">.</span><span class="identifier">hpp</span><span class="special">&gt;</span>
 
@@ -2080,6 +2350,25 @@
     <span class="keyword">void</span> <span class="identifier">sleep</span><span class="special">(</span><span class="identifier">system_time</span> <span class="keyword">const</span><span class="special">&amp;</span> <span class="identifier">abs_time</span><span class="special">)</span>
 <span class="special">}</span>
 </pre>
+<div class="warning"><table border="0" summary="Warning">
+<tr>
+<td rowspan="2" align="center" valign="top" width="25"><img alt="[Warning]" src="../../../doc/src/images/warning.png"></td>
+<th align="left">Warning</th>
+</tr>
+<tr><td align="left" valign="top">
+<p>
+            DEPRECATED since 3.0.0.
+          </p>
+<p>
+            Available only up to Boost 1.56.
+          </p>
+<p>
+            Use <code class="computeroutput"><a class="link" href="thread_management.html#thread.thread_management.this_thread.sleep_for" title="Non-member function sleep_for()"><code class="computeroutput"><span class="identifier">sleep_for</span></code></a><span class="special">()</span></code>
+            and <code class="computeroutput"><a class="link" href="thread_management.html#thread.thread_management.this_thread.sleep_until" title="Non-member function sleep_until()"><code class="computeroutput"><span class="identifier">sleep_until</span></code></a><span class="special">()</span></code>
+            instead.
+          </p>
+</td></tr>
+</table></div>
 <div class="variablelist">
 <p class="title"><b></b></p>
 <dl>
@@ -2099,12 +2388,6 @@
                 <code class="computeroutput"><span class="identifier">sleep</span><span class="special">()</span></code>
                 is one of the predefined <a class="link" href="thread_management.html#interruption_points"><span class="emphasis"><em>interruption
                 points</em></span></a>.
-              </p></dd>
-<dt><span class="term">See:</span></dt>
-<dd><p>
-                Use <code class="computeroutput"><a class="link" href="thread_management.html#thread.thread_management.this_thread.sleep_for" title="Non-member function sleep_for()"><code class="computeroutput"><span class="identifier">sleep_for</span></code></a><span class="special">()</span></code>
-                and <code class="computeroutput"><a class="link" href="thread_management.html#thread.thread_management.this_thread.sleep_until" title="Non-member function sleep_until()"><code class="computeroutput"><span class="identifier">sleep_until</span></code></a><span class="special">()</span></code>
-                instead.
               </p></dd>
 </dl>
 </div>
@@ -2127,9 +2410,7 @@
 <dl>
 <dt><span class="term">Effects:</span></dt>
 <dd><p>
-                Suspends the current thread until the time period specified by <code class="computeroutput"><span class="identifier">rel_time</span></code> has elapsed or the time
-                point specified by <code class="computeroutput"><span class="identifier">abs_time</span></code>
-                has been reached.
+                Suspends the current thread until the time point specified by <code class="computeroutput"><span class="identifier">abs_time</span></code> has been reached.
               </p></dd>
 <dt><span class="term">Throws:</span></dt>
 <dd><p>
@@ -2164,7 +2445,7 @@
 <dl>
 <dt><span class="term">Effects:</span></dt>
 <dd><p>
-                Suspends the current thread until the time point specified by <code class="computeroutput"><span class="identifier">abs_time</span></code> has been reached.
+                Suspends the current thread until the duration specified by by <code class="computeroutput"><span class="identifier">rel_time</span></code> has elapsed.
               </p></dd>
 <dt><span class="term">Throws:</span></dt>
 <dd><p>
@@ -2435,7 +2716,7 @@
 </div>
 <div class="section">
 <div class="titlepage"><div><div><h3 class="title">
-<a name="thread.thread_management.threadgroup"></a><a class="link" href="thread_management.html#thread.thread_management.threadgroup" title="Class thread_group">Class <code class="computeroutput"><span class="identifier">thread_group</span></code></a>
+<a name="thread.thread_management.threadgroup"></a><a class="link" href="thread_management.html#thread.thread_management.threadgroup" title="Class thread_group EXTENSION">Class <code class="computeroutput"><span class="identifier">thread_group</span></code> EXTENSION</a>
 </h3></div></div></div>
 <div class="toc"><dl>
 <dt><span class="section"><a href="thread_management.html#thread.thread_management.threadgroup.constructor">Constructor</a></span></dt>
@@ -2448,17 +2729,24 @@
         function <code class="computeroutput"><span class="identifier">remove_thread</span><span class="special">()</span></code></a></span></dt>
 <dt><span class="section"><a href="thread_management.html#thread.thread_management.threadgroup.join_all">Member
         function <code class="computeroutput"><span class="identifier">join_all</span><span class="special">()</span></code></a></span></dt>
+<dt><span class="section"><a href="thread_management.html#thread.thread_management.threadgroup.is_this_thread_in">Member
+        function <code class="computeroutput"><span class="identifier">is_this_thread_in</span><span class="special">()</span></code></a></span></dt>
+<dt><span class="section"><a href="thread_management.html#thread.thread_management.threadgroup.is_thread_in">Member
+        function <code class="computeroutput"><span class="identifier">is_thread_in</span><span class="special">()</span></code></a></span></dt>
 <dt><span class="section"><a href="thread_management.html#thread.thread_management.threadgroup.interrupt_all">Member
         function <code class="computeroutput"><span class="identifier">interrupt_all</span><span class="special">()</span></code></a></span></dt>
 <dt><span class="section"><a href="thread_management.html#thread.thread_management.threadgroup.size">Member function
         <code class="computeroutput"><span class="identifier">size</span><span class="special">()</span></code></a></span></dt>
 </dl></div>
 <pre class="programlisting"><span class="preprocessor">#include</span> <span class="special">&lt;</span><span class="identifier">boost</span><span class="special">/</span><span class="identifier">thread</span><span class="special">/</span><span class="identifier">thread</span><span class="special">.</span><span class="identifier">hpp</span><span class="special">&gt;</span>
+<span class="preprocessor">#include</span> <span class="special">&lt;</span><span class="identifier">boost</span><span class="special">/</span><span class="identifier">thread</span><span class="special">/</span><span class="identifier">thread_group</span><span class="special">.</span><span class="identifier">hpp</span><span class="special">&gt;</span>
 
-<span class="keyword">class</span> <span class="identifier">thread_group</span><span class="special">:</span>
-    <span class="keyword">private</span> <span class="identifier">noncopyable</span>
+<span class="keyword">class</span> <span class="identifier">thread_group</span>
 <span class="special">{</span>
 <span class="keyword">public</span><span class="special">:</span>
+    <span class="identifier">thread_group</span><span class="special">(</span><span class="keyword">const</span> <span class="identifier">thread_group</span><span class="special">&amp;)</span> <span class="special">=</span> <span class="keyword">delete</span><span class="special">;</span>
+    <span class="identifier">thread_group</span><span class="special">&amp;</span> <span class="keyword">operator</span><span class="special">=(</span><span class="keyword">const</span> <span class="identifier">thread_group</span><span class="special">&amp;)</span> <span class="special">=</span> <span class="keyword">delete</span><span class="special">;</span>
+
     <span class="identifier">thread_group</span><span class="special">();</span>
     <span class="special">~</span><span class="identifier">thread_group</span><span class="special">();</span>
 
@@ -2466,6 +2754,8 @@
     <span class="identifier">thread</span><span class="special">*</span> <span class="identifier">create_thread</span><span class="special">(</span><span class="identifier">F</span> <span class="identifier">threadfunc</span><span class="special">);</span>
     <span class="keyword">void</span> <span class="identifier">add_thread</span><span class="special">(</span><span class="identifier">thread</span><span class="special">*</span> <span class="identifier">thrd</span><span class="special">);</span>
     <span class="keyword">void</span> <span class="identifier">remove_thread</span><span class="special">(</span><span class="identifier">thread</span><span class="special">*</span> <span class="identifier">thrd</span><span class="special">);</span>
+    <span class="keyword">bool</span> <span class="identifier">is_this_thread_in</span><span class="special">();</span>
+    <span class="keyword">bool</span> <span class="identifier">is_thread_in</span><span class="special">(</span><span class="identifier">thread</span><span class="special">*</span> <span class="identifier">thrd</span><span class="special">);</span>
     <span class="keyword">void</span> <span class="identifier">join_all</span><span class="special">();</span>
     <span class="keyword">void</span> <span class="identifier">interrupt_all</span><span class="special">();</span>
     <span class="keyword">int</span> <span class="identifier">size</span><span class="special">()</span> <span class="keyword">const</span><span class="special">;</span>
@@ -2554,7 +2844,7 @@
 <dt><span class="term">Precondition:</span></dt>
 <dd><p>
                 The expression <code class="computeroutput"><span class="keyword">delete</span> <span class="identifier">thrd</span></code> is well-formed and will not
-                result in undefined behaviour.
+                result in undefined behaviour and <code class="computeroutput"><span class="identifier">is_thread_in</span><span class="special">(</span><span class="identifier">thrd</span><span class="special">)</span> <span class="special">==</span> <span class="keyword">false</span></code>.
               </p></dd>
 <dt><span class="term">Effects:</span></dt>
 <dd><p>
@@ -2604,6 +2894,10 @@
 <div class="variablelist">
 <p class="title"><b></b></p>
 <dl>
+<dt><span class="term">Requires:</span></dt>
+<dd><p>
+                <code class="computeroutput"><span class="identifier">is_this_thread_in</span><span class="special">()</span> <span class="special">==</span> <span class="keyword">false</span></code>.
+              </p></dd>
 <dt><span class="term">Effects:</span></dt>
 <dd><p>
                 Call <code class="computeroutput"><span class="identifier">join</span><span class="special">()</span></code>
@@ -2618,6 +2912,42 @@
                 Since <a class="link" href="thread_management.html#thread.thread_management.thread.join" title="Member function join()"><code class="computeroutput"><span class="identifier">join</span><span class="special">()</span></code></a>
                 is one of the predefined <a class="link" href="thread_management.html#interruption_points"><span class="emphasis"><em>interruption
                 points</em></span></a>, <code class="computeroutput"><span class="identifier">join_all</span><span class="special">()</span></code> is also an interruption point.
+              </p></dd>
+</dl>
+</div>
+</div>
+<div class="section">
+<div class="titlepage"><div><div><h4 class="title">
+<a name="thread.thread_management.threadgroup.is_this_thread_in"></a><a class="link" href="thread_management.html#thread.thread_management.threadgroup.is_this_thread_in" title="Member function is_this_thread_in()">Member
+        function <code class="computeroutput"><span class="identifier">is_this_thread_in</span><span class="special">()</span></code></a>
+</h4></div></div></div>
+<pre class="programlisting"><span class="keyword">bool</span> <span class="identifier">is_this_thread_in</span><span class="special">();</span>
+</pre>
+<div class="variablelist">
+<p class="title"><b></b></p>
+<dl>
+<dt><span class="term">Returns:</span></dt>
+<dd><p>
+                true if there is a thread <code class="computeroutput"><span class="identifier">th</span></code>
+                in the group such that <code class="computeroutput"><span class="identifier">th</span><span class="special">.</span><span class="identifier">get_id</span><span class="special">()</span> <span class="special">==</span> <span class="identifier">this_thread</span><span class="special">::</span><span class="identifier">get_id</span><span class="special">()</span></code>.
+              </p></dd>
+</dl>
+</div>
+</div>
+<div class="section">
+<div class="titlepage"><div><div><h4 class="title">
+<a name="thread.thread_management.threadgroup.is_thread_in"></a><a class="link" href="thread_management.html#thread.thread_management.threadgroup.is_thread_in" title="Member function is_thread_in()">Member
+        function <code class="computeroutput"><span class="identifier">is_thread_in</span><span class="special">()</span></code></a>
+</h4></div></div></div>
+<pre class="programlisting"><span class="keyword">bool</span> <span class="identifier">is_thread_in</span><span class="special">(</span><span class="identifier">thread</span><span class="special">*</span> <span class="identifier">thrd</span><span class="special">);</span>
+</pre>
+<div class="variablelist">
+<p class="title"><b></b></p>
+<dl>
+<dt><span class="term">Returns:</span></dt>
+<dd><p>
+                true if there is a thread <code class="computeroutput"><span class="identifier">th</span></code>
+                in the group such that <code class="computeroutput"><span class="identifier">th</span><span class="special">.</span><span class="identifier">get_id</span><span class="special">()</span> <span class="special">==</span> <span class="identifier">thrd</span><span class="special">-&gt;</span><span class="identifier">get_id</span><span class="special">()</span></code>.
               </p></dd>
 </dl>
 </div>
@@ -2673,7 +3003,7 @@
 </tr></table>
 <hr>
 <div class="spirit-nav">
-<a accesskey="p" href="future.html"><img src="../../../doc/src/images/prev.png" alt="Prev"></a><a accesskey="u" href="../thread.html"><img src="../../../doc/src/images/up.png" alt="Up"></a><a accesskey="h" href="../index.html"><img src="../../../doc/src/images/home.png" alt="Home"></a><a accesskey="n" href="synchronization.html"><img src="../../../doc/src/images/next.png" alt="Next"></a>
+<a accesskey="p" href="future.html"><img src="../../../doc/src/images/prev.png" alt="Prev"></a><a accesskey="u" href="../thread.html"><img src="../../../doc/src/images/up.png" alt="Up"></a><a accesskey="h" href="../index.html"><img src="../../../doc/src/images/home.png" alt="Home"></a><a accesskey="n" href="ScopedThreads.html"><img src="../../../doc/src/images/next.png" alt="Next"></a>
 </div>
 </body>
 </html>

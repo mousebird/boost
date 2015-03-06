@@ -12,7 +12,7 @@
     [category template]
     [category testing]
     [category generic]
-    [last-revision $Date: 2011-04-25 10:27:05 -0700 (Mon, 25 Apr 2011) $]
+    [last-revision $Date: 2012-12-10 09:28:53 -0800 (Mon, 10 Dec 2012) $]
 ]
 
 This manual is also available in 
@@ -36,7 +36,7 @@ the static assertion will be evaluated at the time the template is instantiated;
 this is particularly useful for validating template parameters.
 
 If the C++0x `static_assert` feature is available, both macros will use it.
-For `BOOST_STATIC_ASSERT(x)`, the error message with be a stringized version of `x`.
+For `BOOST_STATIC_ASSERT(x)`, the error message will be a stringized version of `x`.
 For `BOOST_STATIC_ASSERT_MSG(x, msg)`, the error message will be the `msg` string.
 
 If the C++0x `static_assert` feature is not available, `BOOST_STATIC_ASSERT_MSG(x, msg)`

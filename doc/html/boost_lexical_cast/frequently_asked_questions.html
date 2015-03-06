@@ -5,7 +5,7 @@
 <link rel="stylesheet" href="../../../doc/src/boostbook.css" type="text/css">
 <meta name="generator" content="DocBook XSL Stylesheets V1.76.1">
 <link rel="home" href="../index.html" title="The Boost C++ Libraries BoostBook Documentation Subset">
-<link rel="up" href="../boost_lexical_cast.html" title="Chapter&#160;15.&#160;Boost.Lexical_Cast 1.0">
+<link rel="up" href="../boost_lexical_cast.html" title="Chapter&#160;16.&#160;Boost.Lexical_Cast 1.0">
 <link rel="prev" href="synopsis.html" title="Synopsis">
 <link rel="next" href="changes.html" title="Changes">
 </head>
@@ -79,7 +79,8 @@
                 Conversion Library Proposal for TR2, N1973</a> is not yet accepted
                 by the committee. By the way, it's a great opportunity to make your
                 <code class="computeroutput"><span class="keyword">operator</span><span class="special">&gt;&gt;</span></code>
-                conform to the standard. Read a good C++ book, study <code class="computeroutput"><span class="identifier">std</span><span class="special">::</span><span class="identifier">sentry</span></code> and <a href="../../../libs/io/doc/ios_state.html" target="_top"><code class="computeroutput"><span class="identifier">ios_state_saver</span></code></a>.
+                more general. Read a good C++ book, study <code class="computeroutput"><span class="identifier">std</span><span class="special">::</span><span class="identifier">sentry</span></code>
+                and <a href="../../../libs/io/doc/ios_state.html" target="_top"><code class="computeroutput"><span class="identifier">ios_state_saver</span></code></a>.
               </li></ul></div>
         </li></ul></div>
 <pre class="programlisting"></pre>
@@ -130,11 +131,13 @@
           a non zero terminated string or a substring using <code class="computeroutput"><span class="identifier">boost</span><span class="special">::</span><span class="identifier">lexical_cast</span></code>?
           <div class="itemizedlist"><ul class="itemizedlist" type="circle"><li class="listitem">
                 <span class="bold"><strong>Answer:</strong></span> Use <code class="computeroutput"><span class="identifier">boost</span><span class="special">::</span><span class="identifier">iterator_range</span></code>
-                for conversion. For example, if you whant to convert to <code class="computeroutput"><span class="keyword">int</span></code> two characters from a string
-                <code class="computeroutput"><span class="identifier">str</span></code>, you shall write
-                <code class="computeroutput"><span class="identifier">lexacal_cast</span><span class="special">&lt;</span><span class="keyword">int</span><span class="special">&gt;(</span><span class="identifier">make_iterator_range</span><span class="special">(</span><span class="identifier">str</span><span class="special">.</span><span class="identifier">c_str</span><span class="special">(),</span>
-                <span class="identifier">str</span><span class="special">.</span><span class="identifier">c_str</span><span class="special">()</span>
-                <span class="special">+</span> <span class="number">2</span><span class="special">));</span></code>.
+                for conversion or <code class="computeroutput"><span class="identifier">lexical_cast</span></code>
+                overload with two parameters. For example, if you whant to convert
+                to <code class="computeroutput"><span class="keyword">int</span></code> two characters
+                from a string <code class="computeroutput"><span class="identifier">str</span></code>,
+                you shall write <code class="computeroutput"><span class="identifier">lexical_cast</span><span class="special">&lt;</span><span class="keyword">int</span><span class="special">&gt;(</span><span class="identifier">make_iterator_range</span><span class="special">(</span><span class="identifier">str</span><span class="special">.</span><span class="identifier">data</span><span class="special">(),</span> <span class="identifier">str</span><span class="special">.</span><span class="identifier">data</span><span class="special">()</span> <span class="special">+</span> <span class="number">2</span><span class="special">));</span></code>
+                or <code class="computeroutput"><span class="identifier">lexical_cast</span><span class="special">&lt;</span><span class="keyword">int</span><span class="special">&gt;(</span><span class="identifier">str</span><span class="special">.</span><span class="identifier">data</span><span class="special">(),</span>
+                <span class="number">2</span><span class="special">);</span></code>.
               </li></ul></div>
         </li></ul></div>
 </div>
