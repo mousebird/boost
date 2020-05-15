@@ -23,6 +23,7 @@ void process_settings(const std::string &filename)
     ptree pt;
     read_info(filename, pt);    
     const ptree &settings = pt.get_child("settings", empty_ptree<ptree>());
+    // Same as: const ptree &settings = pt.get_child("settings", ptree());
     std::cout << "\n    Processing " << filename << std::endl;
     std::cout << "        Setting 1 is " << settings.get("setting1", 0) << std::endl;
     std::cout << "        Setting 2 is " << settings.get("setting2", 0.0) << std::endl;
